@@ -35,6 +35,14 @@ jobs:
         path: libs
         key: ${{ matrix.VS_VERSION }}-${{ hashFiles('.github/workflows/msbuild.yml') }}
 
+    # - name: Cygwin をセットアップ
+    #   uses: cygwin/cygwin-install-action@master
+    #   with:
+    #     packages: cmake,perl-JSON,perl-LWP-Protocol-https
+
+    #- name: before_build (addpkg_syscygwin)
+    #  run: ci_scripts/addpkg_syscygwin.bat
+
     - name: download setup-x86_64.exe
       run: |
         chcp 932
