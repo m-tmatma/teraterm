@@ -729,7 +729,7 @@ private:
             if (message == WM_COMMAND && wParam == MAKEWPARAM(IDC_REFER, BN_CLICKED)) {
                 wchar_t buffer[1024];
                 wchar_t uimsg[MAX_UIMSG];
-				OPENFILENAMEW ofn = {};
+				OPENFILENAMEW ofn = {0};
                 ofn.lStructSize = get_OPENFILENAME_SIZEW();
                 ofn.hwndOwner = *this;
                 ofn.lpstrFile = buffer;
