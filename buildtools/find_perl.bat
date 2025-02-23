@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 if not "%PERL%" == "" exit /b 0
 
 set PERL=perl.exe

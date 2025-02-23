@@ -1,5 +1,6 @@
+ï»¿chcp 65001 >nul
 @echo off
-rem ‚±‚ÌŠO‚Å set ‚³‚ê‚½ RELEASE ‚ğã‘‚«‚µ‚È‚¢‚½‚ß‚É setlocal ‚·‚é
+rem ã“ã®å¤–ã§ set ã•ã‚ŒãŸ RELEASE ã‚’ä¸Šæ›¸ãã—ãªã„ãŸã‚ã« setlocal ã™ã‚‹
 setlocal
 
 SET rebuild=
@@ -137,13 +138,13 @@ endlocal
 exit /b
 
 :help
-echo Tera Term‚ğƒrƒ‹ƒhB(build Tera Term)
+echo Tera Termã‚’ãƒ“ãƒ«ãƒ‰ã€‚(build Tera Term)
 echo.
-echo   %0          ’Êí‚Ìƒrƒ‹ƒh(Normal building)
-echo   %0 rebuild  ƒŠƒrƒ‹ƒh(Re-building)
-echo   %0 release  ƒŠƒŠ[ƒXƒrƒ‹ƒh(rebuild + ƒtƒHƒ‹ƒ_–¼‚ª“Áê(Normal + Plugins building + unique folder naming))
+echo   %0          é€šå¸¸ã®ãƒ“ãƒ«ãƒ‰(Normal building)
+echo   %0 rebuild  ãƒªãƒ“ãƒ«ãƒ‰(Re-building)
+echo   %0 release  ãƒªãƒªãƒ¼ã‚¹ãƒ“ãƒ«ãƒ‰(rebuild + ãƒ•ã‚©ãƒ«ãƒ€åãŒç‰¹æ®Š(Normal + Plugins building + unique folder naming))
 echo ex
-echo   %0 rebuild ^>build.log 2^>^&1  ƒrƒ‹ƒhƒƒO‚ğÌæ‚·‚é(Retrieve building log)
+echo   %0 rebuild ^>build.log 2^>^&1  ãƒ“ãƒ«ãƒ‰ãƒ­ã‚°ã‚’æ¡å–ã™ã‚‹(Retrieve building log)
 echo.
 endlocal
 exit /b
@@ -154,7 +155,7 @@ echo ===================================================
 echo ================= E R R O R =======================
 echo ===================================================
 echo.
-echo ƒrƒ‹ƒh‚É¸”s‚µ‚Ü‚µ‚½ (Failed to build source code)
+echo ãƒ“ãƒ«ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸ (Failed to build source code)
 endlocal
 exit 1
 

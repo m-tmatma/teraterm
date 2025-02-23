@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 echo %~dp0\addpkg_msys2.bat
 
 pushd %~dp0

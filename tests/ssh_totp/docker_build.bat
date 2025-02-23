@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 setlocal
 set CUR=%~dp0
 set PATH=C:\Program Files\Docker\Docker\resources;%PATH%

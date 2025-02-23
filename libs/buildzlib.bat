@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 cd zlib
 
 if not exist "win32\Makefile.msc.release" goto mkmf

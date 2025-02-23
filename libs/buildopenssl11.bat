@@ -1,9 +1,10 @@
-rem OpenSSL�̃r���h
+﻿chcp 65001 >nul
+rem OpenSSLのビルド
 
 cd openssl
 
 
-rem Visual Studio 2005 �̏ꍇ�̓p�b�`��K�p
+rem Visual Studio 2005 の場合はパッチを適用
 set CL_VER=
 for /f "delims=" %%o in ('cl 2^>^&1') do set CL_VER=%%o & goto end_clver_chk
 :end_clver_chk
@@ -21,9 +22,9 @@ popd
 :patch_end
 
 
-rem ossl_static.pdb �� *.pdb �Ȃ̂� nmake clean ����ƍ폜����Ă��܂��B
-rem debug �̂Ƃ��̂ق����K�v���Ǝv����̂ŁA
-rem release ���Ƀr���h���� debug �� ossl_static.pdb ���c��悤�ɂ���B
+rem ossl_static.pdb は *.pdb なので nmake clean すると削除されてしまう。
+rem debug のときのほうが必要だと思われるので、
+rem release を先にビルドして debug の ossl_static.pdb が残るようにする。
 
 if exist "out32\libcrypto.lib" goto build_end
 perl Configure no-asm no-async no-shared no-capieng no-dso no-engine VC-WIN32 -D_WIN32_WINNT=0x0501
@@ -54,17 +55,17 @@ move ossl_static.pdb out32.dbg
 :build_dbg_end
 
 
-rem Visual Studio 2005 �̏ꍇ�� 2003 R2 Platform SDK �̓������m�F����
+rem Visual Studio 2005 の場合は 2003 R2 Platform SDK の導入を確認する
 echo %CL_VER% | find "Compiler Version 14" >nul
 if ERRORLEVEL 1 goto end
 @echo off
 if exist out32\openssl.exe (
-    echo OpenSSL�̃r���h������I�����܂����B
+    echo OpenSSLのビルドが正常終了しました。
     goto end
 )
-echo crypt32.lib �������N�ł����Ƀo�C�i�����쐬�ł��Ă��܂���B
-echo Platform SDK����������Ă��Ȃ��\��������܂��B
-set /P ANS2003SDK="���s���܂����H(y/n)"
+echo crypt32.lib がリンクできずにバイナリが作成できていません。
+echo Platform SDKが導入されていない可能性があります。
+set /P ANS2003SDK="続行しますか？(y/n)"
 if "%ANS2003SDK%"=="y" (
     goto end
 ) else (
@@ -79,6 +80,6 @@ exit /b 0
 
 :fail
 cd ..
-echo "buildopenssl11.bat ���I�����܂�"
+echo "buildopenssl11.bat を終了します"
 @echo on
 exit /b 1

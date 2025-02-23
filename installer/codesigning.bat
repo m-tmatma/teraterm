@@ -1,7 +1,8 @@
+ï»¿chcp 65001 >nul
 @echo off
 
 rem
-rem OpenSSL + signtool ‚ğg‚Á‚ÄAƒIƒŒƒIƒŒƒR[ƒhƒTƒCƒjƒ“ƒOØ–¾‘‚ğ•t—^‚·‚éB
+rem OpenSSL + signtool ã‚’ä½¿ã£ã¦ã€ã‚ªãƒ¬ã‚ªãƒ¬ã‚³ãƒ¼ãƒ‰ã‚µã‚¤ãƒ‹ãƒ³ã‚°è¨¼æ˜æ›¸ã‚’ä»˜ä¸ã™ã‚‹ã€‚
 rem
 
 if "%1"=="/?" goto help
@@ -18,10 +19,10 @@ SET PFXKEY=certificate.pfx
 SET TIMESERV=http://www.trustcenter.de/codesigning/timestamp
 rem SET TIMESERV=http://timestamp.verisign.com/scripts/timstamp.dll
 
-rem SSLØ–¾‘‚Æ”é–§Œ®‚ğì¬‚·‚éB
+rem SSLè¨¼æ˜æ›¸ã¨ç§˜å¯†éµã‚’ä½œæˆã™ã‚‹ã€‚
 
 del /q %PRIVKEY% %CERTKEY% %PFXKEY%
-echo ƒpƒXƒtƒŒ[ƒY‚Í %PASSWD% ‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢
+echo ãƒ‘ã‚¹ãƒ•ãƒ¬ãƒ¼ã‚ºã¯ %PASSWD% ã‚’å…¥ã‚Œã¦ãã ã•ã„
 
 %openssl% req -new -x509 -keyout %PRIVKEY% -out %CERTKEY% -days %DAYS% -config %SSLCONF%
 %openssl% pkcs12 -export -out %PFXKEY% -inkey %PRIVKEY% -in %CERTKEY%
@@ -30,7 +31,7 @@ signtool sign /f %PFXKEY% /a /t %TIMESERV% /p %PASSWD% %EXEFILE%
 exit /b
 
 :help
-echo OpenSSL + signtool ‚ğg‚Á‚ÄAƒIƒŒƒIƒŒƒR[ƒhƒTƒCƒjƒ“ƒOØ–¾‘‚ğ•t—^‚·‚éB
+echo OpenSSL + signtool ã‚’ä½¿ã£ã¦ã€ã‚ªãƒ¬ã‚ªãƒ¬ã‚³ãƒ¼ãƒ‰ã‚µã‚¤ãƒ‹ãƒ³ã‚°è¨¼æ˜æ›¸ã‚’ä»˜ä¸ã™ã‚‹ã€‚
 echo.
 echo Usage:
 echo   %0 Output\teraterm-4.72-RC1.exe

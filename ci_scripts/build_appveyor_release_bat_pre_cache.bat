@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 echo %~dp0\build_appveyor_release_bat_pre_cache.bat
 
 set CUR=%~dp0

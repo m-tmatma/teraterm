@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 echo %~dp0\install_innosetup.bat
 
 pushd %~dp0

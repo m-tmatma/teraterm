@@ -1,7 +1,8 @@
+ï»¿chcp 65001 >nul
 @echo off
 setlocal
 cd /d %~dp0
-echo perl‚ğƒ_ƒEƒ“ƒ[ƒh‚µ‚Äbuildtools/perl‚É“WŠJ‚µ‚Ü‚·
+echo perlã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦buildtools/perlã«å±•é–‹ã—ã¾ã™
 pause
 IF NOT EXIST "C:\Program Files\CMake\bin" goto by_powershell
 

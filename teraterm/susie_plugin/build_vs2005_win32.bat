@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 set CMAKE=..\..\..\libs\cmake-3.11.4-win32-x86\bin\cmake.exe
 
 mkdir build_vs2005_win32

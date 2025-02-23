@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 cd /d %~dp0
 call ..\ci_scripts\find_cmake.bat
 "%CMAKE_COMMAND%" -P doxygen.cmake

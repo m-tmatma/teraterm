@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 @echo off
 
 set TTMACRO=%~dp0\..\teraterm\Debug\ttpmacro.exe

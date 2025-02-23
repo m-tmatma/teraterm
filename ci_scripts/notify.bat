@@ -1,4 +1,5 @@
-rem perl‚Å WEBHOOK_URL ‚É’Ê’m‚·‚é
+ï»¿chcp 65001 >nul
+rem perlã§ WEBHOOK_URL ã«é€šçŸ¥ã™ã‚‹
 
 echo notify.bat %1
 set result=%1

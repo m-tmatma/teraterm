@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 @echo off
 setlocal
 set CUR=%~dp0

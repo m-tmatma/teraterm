@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 echo %~dp0\install_sbapplocale.bat
 
 pushd %~dp0

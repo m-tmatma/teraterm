@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 echo %~dp0\addpkg_syscygwin.bat
 set CUR=%~dp0
 call %CUR%..\buildtools\find_cygwin.bat

@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 rem if "%CMAKE_COMMAND%" == "" goto pass_where
 rem "%SystemRoot%\system32\where.exe" %CMAKE_COMMAND% 2> nul > nul && exit /b
 :pass_where

@@ -1,4 +1,4 @@
-chcp 65001 >nul
+﻿chcp 65001 >nul
 rem toolinfo.bat
 rem  sample
 

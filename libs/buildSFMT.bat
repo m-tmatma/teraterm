@@ -1,3 +1,4 @@
+ï»¿chcp 65001 >nul
 SET filename=SFMT_version_for_teraterm.h
 
 cd SFMT
@@ -27,14 +28,14 @@ echo 	del *.lib *.obj>> Makefile.msc.debug
 nmake /f Makefile.msc.debug
 nmake /f Makefile.msc.release
 
-rem ƒo[ƒWƒ‡ƒ“ƒtƒ@ƒCƒ‹‚ª‚È‚¯‚ê‚Îì‚é
+rem ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã‘ã‚Œã°ä½œã‚‹
 IF EXIST %filename% (GOTO FILE_TRUE) ELSE GOTO FILE_FALSE
 :FILE_TRUE
-ECHO "ƒo[ƒWƒ‡ƒ“ƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚è‚Ü‚µ‚½"
+ECHO "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸ"
 GOTO END
 
 :FILE_FALSE
-ECHO "ƒo[ƒWƒ‡ƒ“ƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚ç‚È‚¢‚Ì‚ÅV‹Kì¬‚µ‚Ü‚·"
+ECHO "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã‚‰ãªã„ã®ã§æ–°è¦ä½œæˆã—ã¾ã™"
 echo #define SFMT_VERSION "Unknown" > %filename%
 GOTO END
 

@@ -1,14 +1,15 @@
+ï»¿chcp 65001 >nul
 @echo off
 
-rem folder ‚ÍApatch ‚ğÀs‚·‚é .. ‚©‚çŒ©‚½‘Š‘ÎƒpƒX
+rem folder ã¯ã€patch ã‚’å®Ÿè¡Œã™ã‚‹ .. ã‹ã‚‰è¦‹ãŸç›¸å¯¾ãƒ‘ã‚¹
 set folder=openssl_patch
 
 set cmdopt2=--binary --backup -p0
 set cmdopt1=--dry-run %cmdopt2%
 
 
-rem ƒpƒbƒ`ƒRƒ}ƒ“ƒh‚Ì‘¶İƒ`ƒFƒbƒN
-rem ..\%folder%\patch.exe, PATH‚ª’Ê‚Á‚Ä‚¢‚épatch ‚Ì—Dæ‡
+rem ãƒ‘ãƒƒãƒã‚³ãƒãƒ³ãƒ‰ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
+rem ..\%folder%\patch.exe, PATHãŒé€šã£ã¦ã„ã‚‹patch ã®å„ªå…ˆé †
 pushd ..
 set patchcmd="%folder%\patch.exe"
 if exist %patchcmd% (
@@ -25,7 +26,7 @@ if %errorlevel% == 0 (goto cmd_true) else goto cmd_false
 
 
 :patch1
-rem freeaddrinfo/getnameinfo/getaddrinfo API(WindowsXPˆÈ~)ˆË‘¶œ‹‚Ì‚½‚ß
+rem freeaddrinfo/getnameinfo/getaddrinfo API(WindowsXPä»¥é™)ä¾å­˜é™¤å»ã®ãŸã‚
 findstr /c:"# undef AI_PASSIVE" ..\openssl\crypto\bio\bio_local.h
 if ERRORLEVEL 1 goto fail1
 goto patch2
@@ -41,10 +42,10 @@ popd
 
 
 :patch5
-rem WindowsMe‚ÅRAND_bytes‚Å—‚¿‚éŒ»Û‰ñ”ğ‚Ì‚½‚ßB
-rem OpenSSL 1.0.2‚Å‚Ímeth‚ÌNULLƒ`ƒFƒbƒN‚ª‚ ‚Á‚½‚ªAOpenSSL 1.1.1‚Å‚È‚­‚È‚Á‚Ä‚¢‚éB
-rem ‚±‚ÌNULLƒ`ƒFƒbƒN‚Í‚È‚­‚Ä‚à–â‘è‚Í‚È‚­A–{¿‚ÍInitializeCriticalSectionAndSpinCount‚É‚ ‚é‚½‚ßA
-rem ƒfƒtƒHƒ‹ƒg‚Å‚Í“K—p‚µ‚È‚¢‚à‚Ì‚Æ‚·‚éB
+rem WindowsMeã§RAND_bytesã§è½ã¡ã‚‹ç¾è±¡å›é¿ã®ãŸã‚ã€‚
+rem OpenSSL 1.0.2ã§ã¯methã®NULLãƒã‚§ãƒƒã‚¯ãŒã‚ã£ãŸãŒã€OpenSSL 1.1.1ã§ãªããªã£ã¦ã„ã‚‹ã€‚
+rem ã“ã®NULLãƒã‚§ãƒƒã‚¯ã¯ãªãã¦ã‚‚å•é¡Œã¯ãªãã€æœ¬è³ªã¯InitializeCriticalSectionAndSpinCountã«ã‚ã‚‹ãŸã‚ã€
+rem ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯é©ç”¨ã—ãªã„ã‚‚ã®ã¨ã™ã‚‹ã€‚
 rem findstr /c:"added if meth is NULL pointer" ..\openssl\crypto\rand\rand_lib.c
 rem if ERRORLEVEL 1 goto fail5
 rem goto patch6
@@ -56,7 +57,7 @@ rem popd
 
 
 :patch6
-rem WindowsMe‚ÅInitializeCriticalSectionAndSpinCount‚ªƒGƒ‰[‚Æ‚È‚éŒ»Û‰ñ”ğ‚Ì‚½‚ßB
+rem WindowsMeã§InitializeCriticalSectionAndSpinCountãŒã‚¨ãƒ©ãƒ¼ã¨ãªã‚‹ç¾è±¡å›é¿ã®ãŸã‚ã€‚
 findstr /c:"myInitializeCriticalSectionAndSpinCount" ..\openssl\crypto\threads_win.c
 if ERRORLEVEL 1 goto fail6
 goto patch7
@@ -68,8 +69,8 @@ popd
 
 
 :patch7
-rem Windows98/Me/NT4.0‚Å‚ÍCryptAcquireContextW‚É‚æ‚éƒGƒ“ƒgƒƒs[æ“¾‚ª
-rem ‚Å‚«‚È‚¢‚½‚ßAV‚µ‚­ˆ—‚ğ’Ç‰Á‚·‚éBCryptAcquireContextW‚Ì—˜—p‚Íc‚·B
+rem Windows98/Me/NT4.0ã§ã¯CryptAcquireContextWã«ã‚ˆã‚‹ã‚¨ãƒ³ãƒˆãƒ­ãƒ”ãƒ¼å–å¾—ãŒ
+rem ã§ããªã„ãŸã‚ã€æ–°ã—ãå‡¦ç†ã‚’è¿½åŠ ã™ã‚‹ã€‚CryptAcquireContextWã®åˆ©ç”¨ã¯æ®‹ã™ã€‚
 findstr /c:"CryptAcquireContextA" ..\openssl\crypto\rand\rand_win.c
 if ERRORLEVEL 1 goto fail7
 goto patch8
@@ -81,10 +82,10 @@ popd
 
 
 :patch8
-rem Windows95‚Å‚Í InterlockedCompareExchange ‚Æ InterlockedCompareExchange ‚ª
-rem –¢ƒTƒ|[ƒg‚Ì‚½‚ßA•Ê‚Ìˆ—‚Å’u‚«Š·‚¦‚éB
-rem InitializeCriticalSectionAndSpinCount ‚à–¢ƒTƒ|[ƒg‚¾‚ªAWindowsMeŒü‚¯‚Ì
-rem ˆ’u‚ÉŠÜ‚Ü‚ê‚éB
+rem Windows95ã§ã¯ InterlockedCompareExchange ã¨ InterlockedCompareExchange ãŒ
+rem æœªã‚µãƒãƒ¼ãƒˆã®ãŸã‚ã€åˆ¥ã®å‡¦ç†ã§ç½®ãæ›ãˆã‚‹ã€‚
+rem InitializeCriticalSectionAndSpinCount ã‚‚æœªã‚µãƒãƒ¼ãƒˆã ãŒã€WindowsMeå‘ã‘ã®
+rem å‡¦ç½®ã«å«ã¾ã‚Œã‚‹ã€‚
 findstr /c:"INTERLOCKEDCOMPAREEXCHANGE" ..\openssl\crypto\threads_win.c
 if ERRORLEVEL 1 goto fail8
 goto patch9
@@ -96,8 +97,8 @@ copy /b openssl\crypto\threads_win.c.orig openssl\crypto\threads_win.c.orig2
 popd
 
 
-rem Windows95‚Å‚Í CryptAcquireContextW ‚ª–¢ƒTƒ|[ƒg‚Ì‚½‚ßAƒGƒ‰[‚Å•Ô‚·‚æ‚¤‚É‚·‚éB
-rem ƒGƒ‰[Œã‚Í CryptAcquireContextA ‚ğg‚¤B
+rem Windows95ã§ã¯ CryptAcquireContextW ãŒæœªã‚µãƒãƒ¼ãƒˆã®ãŸã‚ã€ã‚¨ãƒ©ãƒ¼ã§è¿”ã™ã‚ˆã†ã«ã™ã‚‹ã€‚
+rem ã‚¨ãƒ©ãƒ¼å¾Œã¯ CryptAcquireContextA ã‚’ä½¿ã†ã€‚
 :patch9
 findstr /c:"myCryptAcquireContextW" ..\openssl\crypto\rand\rand_win.c
 if ERRORLEVEL 1 goto fail9
@@ -114,45 +115,45 @@ popd
 
 
 :patch_main_conf
-rem İ’èƒtƒ@ƒCƒ‹‚ÌƒoƒbƒNƒAƒbƒv‚ğæ‚é
+rem è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã‚’å–ã‚‹
 if not exist "..\openssl\Configurations\10-main.conf.orig" (
     copy /y ..\openssl\Configurations\10-main.conf ..\openssl\Configurations\10-main.conf.orig
 )
 
-rem VS2005‚¾‚ÆŒxƒGƒ‰[‚ÅƒRƒ“ƒpƒCƒ‹‚ª~‚Ü‚é–â‘è‚Ö‚Ìˆ’u
+rem VS2005ã ã¨è­¦å‘Šã‚¨ãƒ©ãƒ¼ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãŒæ­¢ã¾ã‚‹å•é¡Œã¸ã®å‡¦ç½®
 perl -e "open(IN,'..\openssl\Configurations/10-main.conf');binmode(STDOUT);while(<IN>){s|/W3|/W1|;s|/WX||;print $_;}close(IN);" > conf.tmp
 move conf.tmp ..\openssl\Configurations/10-main.conf
 
-rem GetModuleHandleExW API(WindowsXPˆÈ~)ˆË‘¶œ‹‚Ì‚½‚ß
+rem GetModuleHandleExW API(WindowsXPä»¥é™)ä¾å­˜é™¤å»ã®ãŸã‚
 perl -e "open(IN,'..\openssl\Configurations/10-main.conf');binmode(STDOUT);while(<IN>){s|(dso_scheme(.+)"win32")|#$1|;print $_;}close(IN);" > conf.tmp
 move conf.tmp ..\openssl\Configurations/10-main.conf
 
-rem Debug build‚Ìwarning LNK4099‘Îô(Workaround)
+rem Debug buildã®warning LNK4099å¯¾ç­–(Workaround)
 perl -e "open(IN,'..\openssl\Configurations/10-main.conf');binmode(STDOUT);while(<IN>){s|/Zi|/Z7|;s|/WX||;print $_;}close(IN);" > conf.tmp
 move conf.tmp ..\openssl\Configurations/10-main.conf
 
 
 :patch_end
-echo "ƒpƒbƒ`‚Í“K—p‚³‚ê‚Ä‚¢‚Ü‚·"
+echo "ãƒ‘ãƒƒãƒã¯é©ç”¨ã•ã‚Œã¦ã„ã¾ã™"
 goto end
 
 
 :patchfail
-echo "ƒpƒbƒ`‚ª“K—p‚³‚ê‚Ä‚¢‚È‚¢‚æ‚¤‚Å‚·"
-set /P ANS="‘±s‚µ‚Ü‚·‚©H(y/n)"
+echo "ãƒ‘ãƒƒãƒãŒé©ç”¨ã•ã‚Œã¦ã„ãªã„ã‚ˆã†ã§ã™"
+set /P ANS="ç¶šè¡Œã—ã¾ã™ã‹ï¼Ÿ(y/n)"
 if "%ANS%"=="y" (
     goto end
 ) else if "%ANS%"=="n" (
-    echo "apply_patch.bat ‚ğI—¹‚µ‚Ü‚·"
+    echo "apply_patch.bat ã‚’çµ‚äº†ã—ã¾ã™"
     exit /b 1
 )
 goto end
 
 
 :cmd_false
-echo ƒpƒbƒ`ƒRƒ}ƒ“ƒh‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ
-echo ‰º‹LƒTƒCƒg‚©‚çƒ_ƒEƒ“ƒ[ƒh‚µ‚ÄA..\%folder% ‚É Git-x.xx.x-32-bit.tar.bz2 “à‚Ì
-echo patch.exe, msys-gcc_s-1.dll, msys-2.0.dll ‚ğ”z’u‚µ‚Ä‚­‚¾‚³‚¢
+echo ãƒ‘ãƒƒãƒã‚³ãƒãƒ³ãƒ‰ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“
+echo ä¸‹è¨˜ã‚µã‚¤ãƒˆã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ã€..\%folder% ã« Git-x.xx.x-32-bit.tar.bz2 å†…ã®
+echo patch.exe, msys-gcc_s-1.dll, msys-2.0.dll ã‚’é…ç½®ã—ã¦ãã ã•ã„
 echo https://github.com/git-for-windows/git/releases/latest
 echo.
 goto patchfail

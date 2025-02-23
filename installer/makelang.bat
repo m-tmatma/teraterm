@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 
 if not exist release\lang_utf16le mkdir release\lang_utf16le
 perl utf8_to.pl utf16le release/lang_utf8/Default.lng release/lang_utf16le/Default.lng

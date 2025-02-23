@@ -1,4 +1,4 @@
-@echo off
+ï»¿@echo off
 setlocal
 chcp 65001
 cd /d %~dp0
@@ -66,10 +66,10 @@ exit /b
 
 :cmake_3_11_4
 set CMAKE_COMMAND=%~dp0..\buildtools\cmake-3.11.4-win32-x86\bin\cmake.exe
-echo 1. PATHã‚Ìcmake.exe‚ðŽg—p‚·‚é
-echo 2. VS2005‚Å‚àŽg—p‚Å‚«‚écmakeŽg—p‚·‚é
-echo    (•K—v‚È‚çŽ©“®‚Åƒ_ƒEƒ“ƒ[ƒh‚µ‚ÄA‚±‚Ìbuildtools/‚ÉƒCƒ“ƒXƒg[ƒ‹‚·‚é)
-if exist %CMAKE_COMMAND% echo    ƒCƒ“ƒXƒg[ƒ‹Ï‚Ý(%CMAKE_COMMAND%)
+echo 1. PATHä¸Šã®cmake.exeã‚’ä½¿ç”¨ã™ã‚‹
+echo 2. VS2005ã§ã‚‚ä½¿ç”¨ã§ãã‚‹cmakeä½¿ç”¨ã™ã‚‹
+echo    (å¿…è¦ãªã‚‰è‡ªå‹•ã§ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ã€ã“ã®buildtools/ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹)
+if exist %CMAKE_COMMAND% echo    ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«æ¸ˆã¿(%CMAKE_COMMAND%)
 
 set /p no="select no "
 echo %no%

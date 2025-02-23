@@ -1,4 +1,5 @@
-rem LibreSSL‚Ìƒrƒ‹ƒh
+ï»¿chcp 65001 >nul
+rem LibreSSLã®ãƒ“ãƒ«ãƒ‰
 
 cd libressl
 
@@ -25,7 +26,7 @@ echo "Can't find Visual Studio"
 goto fail
 
 :vsinstdir
-rem Visual Studio‚Ìƒo[ƒWƒ‡ƒ“”»•Ê
+rem Visual Studioã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³åˆ¤åˆ¥
 set VSCMNDIR="%VSINSTALLDIR%\Common7\Tools\"
 set VSCMNDIR=%VSCMNDIR:\\=\%
 
@@ -63,6 +64,6 @@ exit /b 0
 
 :fail
 cd ..
-echo "buildlibressl.bat ‚ğI—¹‚µ‚Ü‚·"
+echo "buildlibressl.bat ã‚’çµ‚äº†ã—ã¾ã™"
 @echo on
 exit /b 1

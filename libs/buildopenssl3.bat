@@ -1,12 +1,13 @@
-rem OpenSSL‚Ìƒrƒ‹ƒh
+ï»¿chcp 65001 >nul
+rem OpenSSLã®ãƒ“ãƒ«ãƒ‰
 
 cd openssl
 
 
-rem nmmake clean ‚·‚é‚Æ ossl_static.pdb ‚Í *.pdb ‚È‚Ì‚Åíœ‚³‚ê‚Ä‚µ‚Ü‚¤B
-rem ossl_static.pdb ‚Í *.pdb ‚È‚Ì‚Å nmake clean ‚·‚é‚Æíœ‚³‚ê‚Ä‚µ‚Ü‚¤B
-rem debug ‚Ì‚Æ‚«‚Ì‚Ù‚¤‚ª•K—v‚¾‚Æv‚í‚ê‚é‚Ì‚ÅA
-rem release ‚ğæ‚Éƒrƒ‹ƒh‚µ‚Ä debug ‚Ì ossl_static.pdb ‚ªc‚é‚æ‚¤‚É‚·‚éB
+rem nmmake clean ã™ã‚‹ã¨ ossl_static.pdb ã¯ *.pdb ãªã®ã§å‰Šé™¤ã•ã‚Œã¦ã—ã¾ã†ã€‚
+rem ossl_static.pdb ã¯ *.pdb ãªã®ã§ nmake clean ã™ã‚‹ã¨å‰Šé™¤ã•ã‚Œã¦ã—ã¾ã†ã€‚
+rem debug ã®ã¨ãã®ã»ã†ãŒå¿…è¦ã ã¨æ€ã‚ã‚Œã‚‹ã®ã§ã€
+rem release ã‚’å…ˆã«ãƒ“ãƒ«ãƒ‰ã—ã¦ debug ã® ossl_static.pdb ãŒæ®‹ã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
 
 if exist "out32\libcrypto.lib" goto build_end
 perl Configure no-asm no-async no-shared no-capieng no-dso no-engine VC-WIN32

@@ -1,8 +1,9 @@
+ï»¿chcp 65001 >nul
 @echo off
 setlocal
 cd /d %~dp0
 IF NOT EXIST cmake-3.11.4-win32-x86 (
-  echo cmake‚ğƒ_ƒEƒ“ƒ[ƒh‚µ‚Älib/cmake‚É“WŠJ‚µ‚Ü‚·
+  echo cmakeã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦lib/cmakeã«å±•é–‹ã—ã¾ã™
   IF NOT "%1" == "nopause" pause
   powershell -NoProfile -ExecutionPolicy Unrestricted .\getcmake.ps1
 )

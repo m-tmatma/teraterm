@@ -1,4 +1,4 @@
-chcp 65001 >nul
+﻿chcp 65001 >nul
 if not "%VSINSTALLDIR%" == "" goto vsinstdir
 
 rem InnoSetup からビルドする時は、標準で環境変数に設定されている

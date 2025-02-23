@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 set TOSJIS=perl 2sjis.pl
 set REF_E=en\html\reference
 set REF_J=ja\html\reference

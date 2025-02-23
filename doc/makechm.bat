@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 setlocal
 
 set NOPAUSE=1

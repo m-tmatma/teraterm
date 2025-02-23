@@ -1,7 +1,8 @@
-@rem ƒCƒ“ƒXƒg[ƒ‰,zip‚ğì¬
+ï»¿chcp 65001 >nul
+@rem ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ©,zipã‚’ä½œæˆ
 @rem   test
-@rem     release.bat‚ğÀsA
-@rem     7. exec cmd.exe ‚ğ‘I‚ñ‚Å‚©‚çg—p‚·‚é‚ÆA‚±‚Ìbat‚¾‚¯ƒeƒXƒg‚ª‚Å‚«‚Ü‚·
+@rem     release.batã‚’å®Ÿè¡Œã€
+@rem     7. exec cmd.exe ã‚’é¸ã‚“ã§ã‹ã‚‰ä½¿ç”¨ã™ã‚‹ã¨ã€ã“ã®batã ã‘ãƒ†ã‚¹ãƒˆãŒã§ãã¾ã™
 setlocal
 cd /d %~dp0
 

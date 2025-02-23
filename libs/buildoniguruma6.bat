@@ -1,3 +1,4 @@
+﻿chcp 65001 >nul
 pushd oniguruma\src
 
 SET ONIG_DIR=.

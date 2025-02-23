@@ -1,4 +1,4 @@
-chcp 65001 >nul
+﻿chcp 65001 >nul
 rem output
 rem     CYGWIN_PATH     cygwinのbinフォルダ
 
