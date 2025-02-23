@@ -35,7 +35,9 @@ jobs:
       id: cache-libs-restore
       uses: actions/cache/restore@v4
       with:
-        path: libs
+        path: |
+          buildtools/download/
+          libs
         key: ${{ matrix.VS_VERSION }}-${{ hashFiles('.github/workflows/msbuild.yml') }}
 
     # - name: Cygwin をセットアップ
@@ -82,6 +84,7 @@ jobs:
       uses: actions/cache/save@v4
       with:
         path: |
+          buildtools/download/
           libs
         key: ${{ matrix.VS_VERSION }}-${{ hashFiles('.github/workflows/msbuild.yml') }}
 
