@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * (C) 2021- TeraTerm Project
  * All rights reserved.
  *
@@ -66,7 +66,7 @@ typedef enum {
 } ssh_agentflag;
 #define isFixedLengthKey(type)	((type) >= KEY_DSA && (type) <= KEY_ED25519)
 
-// fingerprint‚ÌŽí•Ê
+// fingerprintã®ç¨®åˆ¥
 typedef enum {
 	SSH_FP_DEFAULT = 0,
 	SSH_FP_HEX,

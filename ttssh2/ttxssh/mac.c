@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * (C) 2021- TeraTerm Project
  * All rights reserved.
  *
@@ -162,16 +162,16 @@ const struct SSH2Mac *choose_SSH2_mac_algorithm(char *server_proposal, char *my_
 	return (NULL);
 }
 
-// HMACƒAƒ‹ƒSƒŠƒYƒ€—Dæ‡ˆÊ‚É‰ž‚¶‚ÄAmyproposal[]‚ð‘‚«Š·‚¦‚éB
+// HMACã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ å„ªå…ˆé †ä½ã«å¿œã˜ã¦ã€myproposal[]ã‚’æ›¸ãæ›ãˆã‚‹ã€‚
 // (2011.2.28 yutaka)
 void SSH2_update_hmac_myproposal(PTInstVar pvar)
 {
-	static char buf[256]; // TODO: malloc()‚É‚·‚×‚«
+	static char buf[256]; // TODO: malloc()ã«ã™ã¹ã
 	int index;
 	int len, i;
 
-	// ’ÊM’†‚ÉŒÄ‚Î‚ê‚é‚Æ‚¢‚¤‚±‚Æ‚ÍƒL[Äì¬
-	// ƒL[Äì¬‚Ìê‡‚Í‰½‚à‚µ‚È‚¢
+	// é€šä¿¡ä¸­ã«å‘¼ã°ã‚Œã‚‹ã¨ã„ã†ã“ã¨ã¯ã‚­ãƒ¼å†ä½œæˆ
+	// ã‚­ãƒ¼å†ä½œæˆã®å ´åˆã¯ä½•ã‚‚ã—ãªã„
 	if (pvar->socket != INVALID_SOCKET) {
 		return;
 	}

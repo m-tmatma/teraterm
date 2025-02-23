@@ -1,4 +1,4 @@
-/* Imported from OpenSSH-8.5p1, TeraTerm Project */
+﻿/* Imported from OpenSSH-8.5p1, TeraTerm Project */
 
 /* $OpenBSD: cipher-chachapoly.h,v 1.5 2020/04/03 04:27:03 djm Exp $ */
 

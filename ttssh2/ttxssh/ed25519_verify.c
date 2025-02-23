@@ -1,4 +1,4 @@
-/* $OpenBSD: verify.c,v 1.3 2013/12/09 11:03:45 markus Exp $ */
+﻿/* $OpenBSD: verify.c,v 1.3 2013/12/09 11:03:45 markus Exp $ */
 
 /*
  * Public Domain, Author: Daniel J. Bernstein

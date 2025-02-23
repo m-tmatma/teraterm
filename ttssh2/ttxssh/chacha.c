@@ -1,4 +1,4 @@
-/* Imported via OpenSSH-7.6p1, TeraTerm Project doda */
+ï»¿/* Imported via OpenSSH-7.6p1, TeraTerm Project doda */
 
 /*
 chacha-merged.c version 20080118
@@ -7,8 +7,8 @@ Public domain.
 */
 
 /*
- * ‚±‚Ìƒ\[ƒX‚Í OpenSSL ‚Ì‚Æ‚«‚¾‚¯g‚í‚ê‚é
- * LibreSSL ‚Ì‚Æ‚«‚Í libressl/crypto/compat/chacha_private.h ‚ªg‚í‚ê‚é
+ * ã“ã®ã‚½ãƒ¼ã‚¹ã¯ OpenSSL ã®ã¨ãã ã‘ä½¿ã‚ã‚Œã‚‹
+ * LibreSSL ã®ã¨ãã¯ libressl/crypto/compat/chacha_private.h ãŒä½¿ã‚ã‚Œã‚‹
  */
 #include <openssl/opensslv.h> /* For OPENSSL_VERSION_NUMBER */
 #ifndef LIBRESSL_VERSION_NUMBER

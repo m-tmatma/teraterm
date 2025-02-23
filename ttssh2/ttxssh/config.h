@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2004- TeraTerm Project
  * All rights reserved.
  *
@@ -26,9 +26,9 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// �h���t�g�łȂ��Ȃ����ꍇ�� ifdef ���폜���邽�߂Ɏg�p����B
-// �R���p�C���ɂ����� on/off ���邽�߂ɗ��p����ƁATERATERM.INI��
-// �ۑ�����Ƃ��̋L��������Ă��܂��̂ł���Ă͂����Ȃ��B
+// ドラフトでなくなった場合に ifdef を削除するために使用する。
+// コンパイルにおいて on/off するために利用すると、TERATERM.INIに
+// 保存するときの記号がずれてしまうのでやってはいけない。
 
 // Camellia support draft
 // http://tools.ietf.org/html/draft-kanno-secsh-camellia-02

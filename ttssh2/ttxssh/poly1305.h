@@ -1,4 +1,4 @@
-/* Imported from OpenSSH-8.5p1, TeraTerm Project */
+﻿/* Imported from OpenSSH-8.5p1, TeraTerm Project */
 
 /* $OpenBSD: poly1305.h,v 1.4 2014/05/02 03:27:54 djm Exp $ */
 

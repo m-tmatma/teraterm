@@ -1,4 +1,4 @@
-/* Imported via OpenSSH-7.6p1, TeraTerm Project doda */
+﻿/* Imported via OpenSSH-7.6p1, TeraTerm Project doda */
 
 /* $OpenBSD: chacha.h,v 1.4 2016/08/27 04:04:56 guenther Exp $ */
 
