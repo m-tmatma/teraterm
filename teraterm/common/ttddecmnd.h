@@ -101,3 +101,5 @@
 #define LogOptIncScrBuff    6
 #define LogOptTimestampType 7
 #define LogOptMax           LogOptTimestampType
+
+#define CMD_SIZE_ASCENDING "size-ascending"

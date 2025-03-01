@@ -3167,7 +3167,7 @@ static WORD TTLLogRotate(void)
 	if (Err!=0) return Err;
 
 	Err = ErrSyntax;
-	if (strcmp(Str, "size") == 0 || strcmp(Str, "size-ascending") == 0) {   // ローテートサイズ
+	if (strcmp(Str, "size") == 0 || strcmp(Str, CMD_SIZE_ASCENDING) == 0) {   // ローテートサイズ
 		if (CheckParameterGiven()) {
 			Err = 0;
 			size = 0;
