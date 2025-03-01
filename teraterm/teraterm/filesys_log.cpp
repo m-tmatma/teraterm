@@ -59,6 +59,8 @@
 
 #define TitLog      L"Log"
 
+#pragma comment(lib, "Shlwapi.lib")
+
 /*
    Line Head flag for timestamping
    2007.05.24 Gentaro

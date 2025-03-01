@@ -447,7 +447,6 @@ target_link_libraries(
   user32
   uuid
   ws2_32
-  Shlwapi
   )
 
 if(ENABLE_GDIPLUS)
