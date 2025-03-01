@@ -636,6 +636,7 @@ static void LogRotate(PFileVar fv)
 		if (MoveFileW(fv->FullName, newfile) == 0) {
 			OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
 		}
+		free(newfile);
 	}
 
 	// ÄƒI[ƒvƒ“
