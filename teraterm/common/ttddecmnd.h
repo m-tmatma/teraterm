@@ -102,4 +102,4 @@
 #define LogOptTimestampType 7
 #define LogOptMax           LogOptTimestampType
 
-#define CMD_SIZE_ASCENDING "size-ascending"
+#define CmdString_SizeAscending "size-ascending"
