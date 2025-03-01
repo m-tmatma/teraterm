@@ -418,7 +418,6 @@ endif(ENABLE_GDIPLUS)
 target_link_libraries(
   ${PACKAGE_NAME}
   PRIVATE
-  shlwapi
   common_static
   ttpcmn
   cyglib
@@ -448,6 +447,7 @@ target_link_libraries(
   user32
   uuid
   ws2_32
+  Shlwapi
   )
 
 if(ENABLE_GDIPLUS)
