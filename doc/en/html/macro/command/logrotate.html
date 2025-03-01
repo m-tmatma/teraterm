@@ -32,6 +32,13 @@ logrotate 'halt'
 	    If the &lt;size&gt; is followed by K, the size is assumed to be in kilobytes.
 	    If the M is used, the size is in megabytes.</dd>
 
+	<dt class="macro">'size-ascending' &lt;size&gt;</dt>
+	<dd>When a log file size is over &lt;size&gt; byte, the log file is be rotated.<br>
+	    Assign indexes in ascending order of age. Once an index is assigned, it should not be changed.<br>
+	    The &lt;size&gt; value must be larger than 128.<br>
+	    If the &lt;size&gt; is followed by K, the size is assumed to be in kilobytes.
+	    If the M is used, the size is in megabytes.</dd>
+
 	<dt class="macro">'rotate' &lt;count&gt;</dt>
 	<dd>Log files are rotated &lt;count&gt; times before being removed.<br>
 	    The &lt;count&gt; value must be larger than 1.</dd>

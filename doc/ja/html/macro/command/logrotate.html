@@ -32,6 +32,12 @@ logrotate 'halt'
 	    &lt;size&gt;は128以上であること。<br>
 	    末尾に"K"があるとキロバイト単位、"M"があるとメガバイト単位になる。</dd>
 
+	<dt class="macro">'size-ascending' '&lt;size&gt;'</dt>
+	<dd>ログのサイズが&lt;size&gt;バイトを超えていれば、リネームを行う。<br>
+	    古い順番にインデックスを振る。一度割り当てたインデックスは変更しない。<br>
+	    &lt;size&gt;は128以上であること。<br>
+	    末尾に"K"があるとキロバイト単位、"M"があるとメガバイト単位になる。</dd>
+
 	<dt class="macro">'rotate' &lt;count&gt;</dt>
 	<dd>ログファイルの世代を&lt;count&gt;にする。<br>
 	    &lt;count&gt;は1以上であること。</dd>
