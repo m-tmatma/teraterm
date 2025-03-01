@@ -418,6 +418,7 @@ endif(ENABLE_GDIPLUS)
 target_link_libraries(
   ${PACKAGE_NAME}
   PRIVATE
+  shlwapi
   common_static
   ttpcmn
   cyglib

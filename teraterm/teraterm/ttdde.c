@@ -717,7 +717,9 @@ static HDDEDATA AcceptExecute(HSZ TopicHSz, HDDEDATA Data)
 		if (strncmp(p, "size", 4) == 0) {
 			s = atoi(&p[5]);
 			FLogRotateSize(s);
-
+		} else if (strncmp(p, "size-ascending", sizeof("size-ascending") - 1 ) == 0) {
+			s = atoi(&p[sizeof("size-ascending")]);
+			FLogRotateSizeAscending(s);
 		} else if (strncmp(p, "rotate", 6) == 0) {
 			s = atoi(&p[7]);
 			FLogRotateRotate(s);

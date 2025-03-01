@@ -122,7 +122,8 @@ typedef enum {
 // log rotate mode
 enum rotate_mode {
 	ROTATE_NONE,
-	ROTATE_SIZE
+	ROTATE_SIZE,
+	ROTATE_SIZE_ASCENDING,
 };
 
 // Log Timestamp Type
