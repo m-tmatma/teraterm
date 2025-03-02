@@ -400,6 +400,7 @@ static BOOL LogStart(PFileVar fv, const wchar_t *fname)
 
 	// Log rotate configuration
 	fv->RotateMode = ts.LogRotate;
+	fv->RotateStyle = ts.LogRotateStyle;
 	fv->RotateSize = ts.LogRotateSize;
 	fv->RotateStep = ts.LogRotateStep;
 
