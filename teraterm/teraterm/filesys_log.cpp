@@ -564,6 +564,45 @@ static int FindMaxLogIndex(wchar_t *FullName)
 	return maxIndex;
 }
 
+// 指定インデックス未満のファイルを削除する
+// FullName はユーザーが指定したファイル名
+// インデックス部分は .数値 の形式とする
+static void RemoveFilesLessThanIndex(wchar_t *FullName, int index_less_than)
+{
+	wchar_t *pattern;
+	aswprintf(&pattern, L"%s.*", FullName);
+
+	// FindFileFirst でファイルを検索し、最新のファイルのインデックスを取得
+	WIN32_FIND_DATAW FindFileData;
+	HANDLE hFind = FindFirstFileW(pattern, &FindFileData);
+	free(pattern);
+
+	// FullName のディレクトリ名を取得
+	wchar_t *dir = _wcsdup(FullName);
+	PathRemoveFileSpecW(dir);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			// ファイル名の最後の数字を取得
+			wchar_t *ext = PathFindExtensionW(FindFileData.cFileName);
+			if (ext != NULL) {
+				wchar_t *end;
+				int num = wcstol(ext + 1, &end, 10);
+				if (num < index_less_than) {
+					// フルパスを生成
+					wchar_t *fullpath;
+					aswprintf(&fullpath, L"%s\\%s", dir, FindFileData.cFileName);
+					DeleteFileW(fullpath);
+					free(fullpath);
+				}
+			}
+		} while (FindNextFileW(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+
+	free(dir);
+}
+
 // ログをローテートする。
 // (2013.3.21 yutaka)
 static void LogRotate(PFileVar fv)
@@ -595,16 +634,18 @@ static void LogRotate(PFileVar fv)
 			// 古いファイルから新しいファイルに .1 から .n までのインデックスにリネームする
 			int maxIndex = FindMaxLogIndex(fv->FullName);
 
-			// 次のインデックス用に更新
-			maxIndex++;
-
 			// ファイルをリネーム
 			wchar_t *newfile;
-			aswprintf(&newfile, L"%s.%d", fv->FullName, maxIndex);
+			aswprintf(&newfile, L"%s.%d", fv->FullName, maxIndex + 1);
 			if (MoveFileW(fv->FullName, newfile) == 0) {
 				OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
 			}
 			free(newfile);
+
+			if (fv->RotateStep > 0) {
+				// 指定された世代数を超えたファイルを削除する
+				RemoveFilesLessThanIndex(fv->FullName, maxIndex - fv->RotateStep + 1);
+			}
 		}
 		break;
 
