@@ -526,6 +526,7 @@ struct tttset {
 	char ScpSendDir[MAXPATHLEN];				// SCP 送信先(ホストのディレクトリ)
 	char reserver_BGImageFilePath[MAX_PATH];
 	int LogRotate;		//	enum rotate_mode LogRotate;
+	enum rotate_style LogRotateStyle;
 	DWORD LogRotateSize;
 	WORD LogRotateSizeType;
 	WORD LogRotateStep;
