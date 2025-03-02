@@ -634,9 +634,12 @@ static void LogRotate(PFileVar fv)
 			// 古いファイルから新しいファイルに .1 から .n までのインデックスにリネームする
 			int maxIndex = FindMaxLogIndex(fv->FullName);
 
+			// 次のインデックス用に更新
+			maxIndex++;
+
 			// ファイルをリネーム
 			wchar_t *newfile;
-			aswprintf(&newfile, L"%s.%d", fv->FullName, maxIndex + 1);
+			aswprintf(&newfile, L"%s.%d", fv->FullName, maxIndex);
 			if (MoveFileW(fv->FullName, newfile) == 0) {
 				OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
 			}
