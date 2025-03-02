@@ -34,8 +34,22 @@ logrotate 'halt'
 
 	<dt class="macro">'style' &lt;style&gt;</dt>
 	<dd>In 'descending' style, log file which has smaller index is newer file. log file which has larger index is older file.<br>
+	    <br>
+	    Example: logfile name is c:\hogehoge\teraterm.log<br>
+	    newest file: c:\hogehoge\teraterm.log.1<br>
+	    2nd newer file: c:\hogehoge\teraterm.log.2<br>
+	    3rd newer file: c:\hogehoge\teraterm.log.3<br>
+	    ...<br>
+	    <br>
 	    In 'ascending' style, log file which has larger index is newer file. log file which has smaller index is older file.<br>
 	    Assign indexes in ascending order of age. Once an index is assigned, it should not be changed.<br>
+	    <br>
+	    Example: logfile name is c:\hogehoge\teraterm.log<br>
+	    oldest file: c:\hogehoge\teraterm.log.1<br>
+	    2nd older file: c:\hogehoge\teraterm.log.2<br>
+	    3rd older file: c:\hogehoge\teraterm.log.3<br>
+	    ...<br>
+	    <br>
 
 	<dt class="macro">'rotate' &lt;count&gt;</dt>
 	<dd>Log files are rotated &lt;count&gt; times before being removed.<br>
