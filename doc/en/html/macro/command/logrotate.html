@@ -32,6 +32,11 @@ logrotate 'halt'
 	    If the &lt;size&gt; is followed by K, the size is assumed to be in kilobytes.
 	    If the M is used, the size is in megabytes.</dd>
 
+	<dt class="macro">'style' &lt;style&gt;</dt>
+	<dd>In 'descending' style, log file which has smaller index is newer file. log file which has larger index is older file.<br>
+	    In 'ascending' style, log file which has larger index is newer file. log file which has smaller index is older file.<br>
+	    Assign indexes in ascending order of age. Once an index is assigned, it should not be changed.<br>
+
 	<dt class="macro">'rotate' &lt;count&gt;</dt>
 	<dd>Log files are rotated &lt;count&gt; times before being removed.<br>
 	    The &lt;count&gt; value must be larger than 1.</dd>
