@@ -897,6 +897,7 @@ void FLogRotateHalt(void)
 		return;
 	}
 	fv->RotateMode = ROTATE_NONE;
+	fv->RotateStyle = ROTATE_STYLE_DESCENDING;
 	fv->RotateSize = 0;
 	fv->RotateStep = 0;
 }
