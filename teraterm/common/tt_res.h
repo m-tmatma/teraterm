@@ -192,7 +192,7 @@
 #define IDC_OPT_INCBUF                  2540
 #define IDC_OPT_TIMESTAMP_TYPE          2541
 #define IDC_ROTATE_STYLE_TEXT           2542
-#define IDC_ROTATE_STYLE                2543
+#define IDC_OPT_ROTATE_STYLE            2543
 #define IDC_TRIMNLCHAR                  2564
 #define IDC_CLIPBOARD_NOTIFY            2566
 #define IDC_TITLEFMT_GROUP              2568
