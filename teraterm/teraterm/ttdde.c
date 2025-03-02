@@ -718,7 +718,6 @@ static HDDEDATA AcceptExecute(HSZ TopicHSz, HDDEDATA Data)
 			s = atoi(&p[5]);
 			FLogRotateSize(s);
 		} else if (strncmp(p, CmdString_RotateStyle, sizeof(CmdString_RotateStyle) - 1) == 0) {
-			enum rotate_style RotateStyle = ROTATE_STYLE_DESCENDING;
 			s = atoi(p + sizeof(CmdString_RotateStyle));
 			FLogRotateStyle(s);
 		} else if (strncmp(p, "rotate", 6) == 0) {
