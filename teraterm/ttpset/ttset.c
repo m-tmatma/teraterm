@@ -2579,6 +2579,7 @@ void PASCAL _WriteIniFile(const wchar_t *FName, PTTSet ts)
 	WriteInt(Section, "LogRotateSize", FName, ts->LogRotateSize);
 	WriteInt(Section, "LogRotateSizeType", FName, ts->LogRotateSizeType);
 	WriteInt(Section, "LogRotateStep", FName, ts->LogRotateStep);
+	WriteInt(Section, "LogRotateStyle", FName, ts->LogRotateStyle);
 
 	/* Deferred Log Write Mode (2013.4.20 yutaka) */
 	WriteOnOff(Section, "DeferredLogWriteMode", FName, ts->DeferredLogWriteMode);
