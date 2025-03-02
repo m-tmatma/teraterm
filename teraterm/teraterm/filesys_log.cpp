@@ -36,6 +36,7 @@
 #include <process.h>
 #include <windows.h>
 #include <assert.h>
+#include <shlwapi.h>
 
 #include "teraterm.h"
 #include "tttypes.h"
@@ -57,6 +58,8 @@
 #include "filesys.h"  // for ProtoGetProtoFlag()
 
 #define TitLog      L"Log"
+
+#pragma comment(lib, "Shlwapi.lib")
 
 /*
    Line Head flag for timestamping
@@ -80,6 +83,7 @@ typedef struct {
 
 	// log rotate
 	int RotateMode;  //  enum rotate_mode RotateMode;
+	enum rotate_style RotateStyle;
 	LONG RotateSize;
 	int RotateStep;
 
@@ -518,6 +522,48 @@ static inline void logfile_unlock(void)
 	LeaveCriticalSection(&g_filelog_lock);
 }
 
+
+// 最大のログファイルインデックスを取得する
+// 前提
+// FullName はユーザーが指定したファイル名
+// インデックス部分は .数値 の形式とする
+// 例
+// FullName: c:\hogehoge\teraterm.log
+// インデックス付きのログファイル名
+// c:\hogehoge\teraterm.log.1
+// c:\hogehoge\teraterm.log.2
+// ...
+// c:\hogehoge\teraterm.log.10
+//
+// →　この場合この関数は 10 を返す
+static int FindMaxLogIndex(wchar_t *FullName)
+{
+	int maxIndex = 0;
+	wchar_t *pattern;
+	aswprintf(&pattern, L"%s.*", FullName);
+
+	// FindFileFirst でファイルを検索し、最新のファイルのインデックスを取得
+	WIN32_FIND_DATAW FindFileData;
+	HANDLE hFind = FindFirstFileW(pattern, &FindFileData);
+	free(pattern);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			// ファイル名の最後の数字を取得
+			wchar_t *ext = PathFindExtensionW(FindFileData.cFileName);
+			if (ext != NULL) {
+				wchar_t *end;
+				int num = wcstol(ext + 1, &end, 10);
+				if (num > maxIndex) {
+					maxIndex = num;
+				}
+			}
+		} while (FindNextFileW(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+	return maxIndex;
+}
+
 // ログをローテートする。
 // (2013.3.21 yutaka)
 static void LogRotate(PFileVar fv)
@@ -543,38 +589,63 @@ static void LogRotate(PFileVar fv)
 	// いったん今のファイルをクローズして、別名のファイルをオープンする。
 	CloseFileSync(fv);
 
-	// 世代ローテーションのステップ数の指定があるか
-	if (fv->RotateStep > 0)
-		loopmax = fv->RotateStep;
+	switch(fv->RotateStyle){
+	case ROTATE_STYLE_ASCENDING:
+		{
+			// 古いファイルから新しいファイルに .1 から .n までのインデックスにリネームする
+			int maxIndex = FindMaxLogIndex(fv->FullName);
 
-	for (i = 1 ; i <= loopmax ; i++) {
-		wchar_t *filename;
-		aswprintf(&filename, L"%s.%d", fv->FullName, i);
-		DWORD attr = GetFileAttributesW(filename);
-		free(filename);
-		if (attr == INVALID_FILE_ATTRIBUTES)
-			break;
-	}
-	if (i > loopmax) {
-		// 世代がいっぱいになったら、最古のファイルから廃棄する。
-		i = loopmax;
-	}
+			// 次のインデックス用に更新
+			maxIndex++;
 
-	// 別ファイルにリネーム。
-	for (k = i-1 ; k >= 0 ; k--) {
-		wchar_t *oldfile;
-		if (k == 0)
-			oldfile = _wcsdup(fv->FullName);
-		else
-			aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
-		wchar_t *newfile;
-		aswprintf(&newfile, L"%s.%d", fv->FullName, k+1);
-		DeleteFileW(newfile);
-		if (MoveFileW(oldfile, newfile) == 0) {
-			OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+			// ファイルをリネーム
+			wchar_t *newfile;
+			aswprintf(&newfile, L"%s.%d", fv->FullName, maxIndex);
+			if (MoveFileW(fv->FullName, newfile) == 0) {
+				OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+			}
+			free(newfile);
 		}
-		free(oldfile);
-		free(newfile);
+		break;
+
+	case ROTATE_STYLE_DESCENDING:
+	default:
+		{
+			// 世代ローテーションのステップ数の指定があるか
+			if (fv->RotateStep > 0)
+				loopmax = fv->RotateStep;
+
+			for (i = 1 ; i <= loopmax ; i++) {
+				wchar_t *filename;
+				aswprintf(&filename, L"%s.%d", fv->FullName, i);
+				DWORD attr = GetFileAttributesW(filename);
+				free(filename);
+				if (attr == INVALID_FILE_ATTRIBUTES)
+					break;
+			}
+			if (i > loopmax) {
+				// 世代がいっぱいになったら、最古のファイルから廃棄する。
+				i = loopmax;
+			}
+
+			// 別ファイルにリネーム。
+			for (k = i-1 ; k >= 0 ; k--) {
+				wchar_t *oldfile;
+				if (k == 0)
+					oldfile = _wcsdup(fv->FullName);
+				else
+					aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
+				wchar_t *newfile;
+				aswprintf(&newfile, L"%s.%d", fv->FullName, k+1);
+				DeleteFileW(newfile);
+				if (MoveFileW(oldfile, newfile) == 0) {
+					OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+				}
+				free(oldfile);
+				free(newfile);
+			}
+		}
+		break;
 	}
 
 	// 再オープン
@@ -788,6 +859,18 @@ void FLogRotateSize(size_t size)
 	}
 	fv->RotateMode = ROTATE_SIZE;
 	fv->RotateSize = (LONG)size;
+}
+
+/**
+ *	ログローテートスタイルの設定
+ */
+void FLogRotateStyle(enum rotate_style RotateStyle)
+{
+	PFileVar fv = LogVar;
+	if (fv == NULL) {
+		return;
+	}
+	fv->RotateStyle = RotateStyle;
 }
 
 /**
