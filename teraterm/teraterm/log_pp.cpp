@@ -94,6 +94,7 @@ void CLogPropPageDlg::OnInitDialog()
 		{ IDC_AUTOSTART, "DLG_TAB_LOG_AUTOSTART" },
 		// Log rotate
 		{ IDC_LOG_ROTATE, "DLG_TAB_LOG_ROTATE" },
+		{ IDC_ROTATE_STYLE_TEXT, "DLG_TAB_LOG_ROTATE_STYLE_TEXT" },
 		{ IDC_ROTATE_SIZE_TEXT, "DLG_TAB_LOG_ROTATE_SIZE_TEXT" },
 		{ IDC_ROTATE_STEP_TEXT, "DLG_TAB_LOG_ROTATESTEP" },
 		// Log options
@@ -115,6 +116,13 @@ void CLogPropPageDlg::OnInitDialog()
 		{ "DLG_FOPT_TIMESTAMP_ELAPSED_CONNECTION", L"Elapsed Time (Connection)" },
 	};
 	SetI18nListW("Tera Term", m_hWnd, IDC_OPT_TIMESTAMP_TYPE, fopt_timestamp, _countof(fopt_timestamp),
+				 ts.UILanguageFileW, 0);
+
+	const static I18nTextInfo fopt_rotate_style[] = {
+		{"DLG_FOPT_ROTATE_STYLE_DESCENDING", L"Descending"},
+		{"DLG_FOPT_ROTATE_STYLE_ASCENDING", L"Ascending"},
+	};
+	SetI18nListW("Tera Term", m_hWnd, IDC_ROTATE_STYLE, fopt_rotate_style, _countof(fopt_rotate_style),
 				 ts.UILanguageFileW, 0);
 
 	// Viewlog Editor path
@@ -165,12 +173,14 @@ void CLogPropPageDlg::OnInitDialog()
 		EnableDlgItem(IDC_ROTATE_SIZE_TYPE, FALSE);
 		EnableDlgItem(IDC_ROTATE_STEP_TEXT, FALSE);
 		EnableDlgItem(IDC_ROTATE_STEP, FALSE);
+		EnableDlgItem(IDC_ROTATE_STYLE, FALSE);
 	} else {
 		EnableDlgItem(IDC_ROTATE_SIZE_TEXT, TRUE);
 		EnableDlgItem(IDC_ROTATE_SIZE, TRUE);
 		EnableDlgItem(IDC_ROTATE_SIZE_TYPE, TRUE);
 		EnableDlgItem(IDC_ROTATE_STEP_TEXT, TRUE);
 		EnableDlgItem(IDC_ROTATE_STEP, TRUE);
+		EnableDlgItem(IDC_ROTATE_STYLE, TRUE);
 	}
 
 	// Log options
@@ -188,6 +198,7 @@ void CLogPropPageDlg::OnInitDialog()
 	SetCheck(IDC_OPT_INCBUF, ts.LogAllBuffIncludedInFirst != 0);
 	SetCheck(IDC_OPT_TIMESTAMP, ts.LogTimestamp != 0);
 
+	SetCurSel(IDC_ROTATE_STYLE, ts.LogRotateStyle);
 	SetCurSel(IDC_OPT_TIMESTAMP_TYPE, ts.LogTimestampType);
 	if (ts.LogBinary || !ts.LogTimestamp) {
 		EnableDlgItem(IDC_OPT_TIMESTAMP_TYPE, FALSE);
@@ -303,12 +314,14 @@ BOOL CLogPropPageDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 					EnableDlgItem(IDC_ROTATE_SIZE_TYPE, TRUE);
 					EnableDlgItem(IDC_ROTATE_STEP_TEXT, TRUE);
 					EnableDlgItem(IDC_ROTATE_STEP, TRUE);
+					EnableDlgItem(IDC_ROTATE_STYLE, TRUE);
 				} else {
 					EnableDlgItem(IDC_ROTATE_SIZE_TEXT, FALSE);
 					EnableDlgItem(IDC_ROTATE_SIZE, FALSE);
 					EnableDlgItem(IDC_ROTATE_SIZE_TYPE, FALSE);
 					EnableDlgItem(IDC_ROTATE_STEP_TEXT, FALSE);
 					EnableDlgItem(IDC_ROTATE_STEP, FALSE);
+					EnableDlgItem(IDC_ROTATE_STYLE, FALSE);
 				}
 
 			}
@@ -474,6 +487,7 @@ void CLogPropPageDlg::OnOK()
 			ts.LogRotateSize *= 1024;
 
 		ts.LogRotateStep = GetDlgItemInt(IDC_ROTATE_STEP);
+		ts.LogRotateStyle = (enum rotate_style)GetCurSel(IDC_ROTATE_STYLE);
 
 	} else { /* off */
 		ts.LogRotate = ROTATE_NONE;
