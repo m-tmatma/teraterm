@@ -3867,6 +3867,7 @@ ed25519_error:
 	buffer_free(kdf);
 	buffer_free(encoded);
 	buffer_free(blob);
+	free(cc);
 }
 
 static INT_PTR CALLBACK TTXKeyGenerator(HWND dlg, UINT msg, WPARAM wParam,
