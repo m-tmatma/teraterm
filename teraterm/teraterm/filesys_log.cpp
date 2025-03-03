@@ -541,7 +541,9 @@ static int FindMaxLogIndex(wchar_t *FullName)
 {
 	int maxIndex = 0;
 	wchar_t *pattern;
-	aswprintf(&pattern, L"%s.*", FullName);
+	if (aswprintf(&pattern, L"%s.*", FullName) < 0) {
+		return 0;
+	}
 
 	// FindFileFirst でファイルを検索し、最新のファイルのインデックスを取得
 	WIN32_FIND_DATAW FindFileData;
