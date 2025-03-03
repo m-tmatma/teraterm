@@ -198,7 +198,17 @@ void CLogPropPageDlg::OnInitDialog()
 	SetCheck(IDC_OPT_INCBUF, ts.LogAllBuffIncludedInFirst != 0);
 	SetCheck(IDC_OPT_TIMESTAMP, ts.LogTimestamp != 0);
 
-	SetCurSel(IDC_OPT_ROTATE_STYLE, ts.LogRotateStyle);
+	int IndexRotateStyle = 0;
+	if (ts.LogRotateStyle == ROTATE_STYLE_ASCENDING) {
+		// ROTATE_STYLE_ASCENDING
+		IndexRotateStyle = 1;
+	}
+	else {
+		// ROTATE_STYLE_DESCENDING
+		IndexRotateStyle = 0;
+	}
+	SetCurSel(IDC_OPT_ROTATE_STYLE, IndexRotateStyle);
+
 	SetCurSel(IDC_OPT_TIMESTAMP_TYPE, ts.LogTimestampType);
 	if (ts.LogBinary || !ts.LogTimestamp) {
 		EnableDlgItem(IDC_OPT_TIMESTAMP_TYPE, FALSE);
@@ -487,8 +497,12 @@ void CLogPropPageDlg::OnOK()
 			ts.LogRotateSize *= 1024;
 
 		ts.LogRotateStep = GetDlgItemInt(IDC_ROTATE_STEP);
-		ts.LogRotateStyle = (enum rotate_style)GetCurSel(IDC_OPT_ROTATE_STYLE);
-
+		if (GetCurSel(IDC_OPT_ROTATE_STYLE) == 1) {
+			ts.LogRotateStyle = ROTATE_STYLE_ASCENDING;
+		}
+		else {
+			ts.LogRotateStyle = ROTATE_STYLE_DESCENDING;
+		}
 	} else { /* off */
 		ts.LogRotate = ROTATE_NONE;
 		/* 残りのメンバーは意図的に設定を残す。*/
