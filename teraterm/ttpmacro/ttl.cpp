@@ -3159,7 +3159,7 @@ static WORD TTLLogRotate(void)
 	char Str[MaxStrLen];
 	char Str2[MaxStrLen];
 	char buf[MaxStrLen*2];
-	int size, num, len;
+	int size, num = 0, len = 0;
 
 	Err = 0;
 	GetStrVal(Str, &Err);
