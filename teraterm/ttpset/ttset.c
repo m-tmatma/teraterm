@@ -1046,15 +1046,6 @@ void PASCAL _ReadIniFile(const wchar_t *FName, PTTSet ts)
 	else
 		ts->LogTimestampType = TIMESTAMP_LOCAL;
 
-	/* LogRotateStyle */
-	GetPrivateProfileString(Section, "LogRotateStyle", "", Temp, sizeof(Temp), FName);
-	if (_stricmp(Temp, "ascending") == 0)
-		ts->LogRotateStyle = ROTATE_STYLE_ASCENDING;
-	else if (_stricmp(Temp, "descending") == 0)
-		ts->LogRotateStyle = ROTATE_STYLE_DESCENDING;
-	else
-		ts->LogRotateStyle = ROTATE_STYLE_DESCENDING;
-
 	/* File Transfer dialog visibility */
 	ts->FTHideDialog = GetOnOff(Section, "FTHideDialog", FName, FALSE);
 
