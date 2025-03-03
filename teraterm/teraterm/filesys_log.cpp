@@ -573,7 +573,9 @@ static int FindMaxLogIndex(wchar_t *FullName)
 static void RemoveFilesLessThanIndex(wchar_t *FullName, int index_less_than)
 {
 	wchar_t *pattern;
-	aswprintf(&pattern, L"%s.*", FullName);
+	if (aswprintf(&pattern, L"%s.*", FullName) < 0) {
+		return;
+	}
 
 	// FindFileFirst でファイルを検索し、最新のファイルのインデックスを取得
 	WIN32_FIND_DATAW FindFileData;
@@ -582,6 +584,12 @@ static void RemoveFilesLessThanIndex(wchar_t *FullName, int index_less_than)
 
 	// FullName のディレクトリ名を取得
 	wchar_t *dir = _wcsdup(FullName);
+	if (dir == NULL) {
+		if (hFind != INVALID_HANDLE_VALUE) {
+			FindClose(hFind);
+		}
+		return;
+	}
 	PathRemoveFileSpecW(dir);
 
 	if (hFind != INVALID_HANDLE_VALUE) {
@@ -594,9 +602,10 @@ static void RemoveFilesLessThanIndex(wchar_t *FullName, int index_less_than)
 				if (num < index_less_than) {
 					// フルパスを生成
 					wchar_t *fullpath;
-					aswprintf(&fullpath, L"%s\\%s", dir, FindFileData.cFileName);
-					DeleteFileW(fullpath);
-					free(fullpath);
+					if (aswprintf(&fullpath, L"%s\\%s", dir, FindFileData.cFileName) >= 0) {
+						DeleteFileW(fullpath);
+						free(fullpath);
+					}
 				}
 			}
 		} while (FindNextFileW(hFind, &FindFileData));
