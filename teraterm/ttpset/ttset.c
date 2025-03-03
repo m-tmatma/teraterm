@@ -2579,7 +2579,7 @@ void PASCAL _WriteIniFile(const wchar_t *FName, PTTSet ts)
 	WriteInt(Section, "LogRotateSize", FName, ts->LogRotateSize);
 	WriteInt(Section, "LogRotateSizeType", FName, ts->LogRotateSizeType);
 	WriteInt(Section, "LogRotateStep", FName, ts->LogRotateStep);
-	if (ts->LogRotateStyle = ROTATE_STYLE_ASCENDING) {
+	if (ts->LogRotateStyle == ROTATE_STYLE_ASCENDING) {
 		WritePrivateProfileString(Section, "LogRotateStyle", "ascending", FName);
 	}
 	else {
