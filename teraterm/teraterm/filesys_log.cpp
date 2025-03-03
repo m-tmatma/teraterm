@@ -674,10 +674,13 @@ static void LogRotate(PFileVar fv)
 			for (i = 1 ; i <= loopmax ; i++) {
 				wchar_t *filename;
 				aswprintf(&filename, L"%s.%d", fv->FullName, i);
-				DWORD attr = GetFileAttributesW(filename);
-				free(filename);
-				if (attr == INVALID_FILE_ATTRIBUTES)
-					break;
+				if (filename != NULL) {
+					// ファイルが存在するか
+					DWORD attr = GetFileAttributesW(filename);
+					free(filename);
+					if (attr == INVALID_FILE_ATTRIBUTES)
+						break;
+				}
 			}
 			if (i > loopmax) {
 				// 世代がいっぱいになったら、最古のファイルから廃棄する。
@@ -693,9 +696,11 @@ static void LogRotate(PFileVar fv)
 					aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
 				wchar_t *newfile;
 				aswprintf(&newfile, L"%s.%d", fv->FullName, k+1);
-				DeleteFileW(newfile);
-				if (MoveFileW(oldfile, newfile) == 0) {
-					OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+				if (newfile != NULL && oldfile != NULL) {
+					DeleteFileW(newfile);
+					if (MoveFileW(oldfile, newfile) == 0) {
+						OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+					}
 				}
 				free(oldfile);
 				free(newfile);
