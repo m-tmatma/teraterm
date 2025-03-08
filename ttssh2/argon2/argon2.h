@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Argon2 reference source code package - reference C implementations
  *
  * Copyright 2015

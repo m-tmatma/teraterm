@@ -1,4 +1,4 @@
-/* Imported via OpenSSH-8.5p1, TeraTerm Project */
+﻿/* Imported via OpenSSH-8.5p1, TeraTerm Project */
 
 /*	$OpenBSD: ssherr.c,v 1.10 2020/01/25 23:13:09 djm Exp $	*/
 /*

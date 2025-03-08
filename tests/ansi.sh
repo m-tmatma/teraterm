@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 
 printf "\\033[0m\n"
 i=30

@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * Copyright (c) 1998-2001, Robert O'Callahan
  * (C) 2004- TeraTerm Project
  * All rights reserved.
@@ -35,8 +35,8 @@ See LICENSE.TXT for the license.
 #ifndef __PKT_H
 #define __PKT_H
 
-// Å‘å‚ÅóM‚Å‚«‚éƒpƒPƒbƒgƒTƒCƒYBOpenSSH 5.2‚Å‚Í 256KB ‚¾‚ªA
-// TTSSH ‚Å‚ÍƒIƒŠƒWƒiƒ‹‚Ì ‚©‚ç 4MB ‚È‚Ì‚ÅA‚»‚ê‚É‡‚í‚¹‚é‚±‚Æ‚É‚·‚éB
+// æœ€å¤§ã§å—ä¿¡ã§ãã‚‹ãƒ‘ã‚±ãƒƒãƒˆã‚µã‚¤ã‚ºã€‚OpenSSH 5.2ã§ã¯ 256KB ã ãŒã€
+// TTSSH ã§ã¯ã‚ªãƒªã‚¸ãƒŠãƒ«ã®é ƒã‹ã‚‰ 4MB ãªã®ã§ã€ãã‚Œã«åˆã‚ã›ã‚‹ã“ã¨ã«ã™ã‚‹ã€‚
 #define PACKET_MAX_SIZE (4 * 1024 * 1024)
 
 typedef struct {

@@ -1,1 +1,1 @@
-cmake -P icon_extract.cmake
+﻿cmake -P icon_extract.cmake

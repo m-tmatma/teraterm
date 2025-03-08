@@ -1,4 +1,4 @@
-clone=true
+﻿clone=true
 #clone=false
 if $clone; then
   git clone --branch main --depth 1 https://github.com/TeraTermProject/teraterm.git

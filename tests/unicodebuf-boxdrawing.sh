@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 
 # https://www.teraterm.jp/manual/4.59/html/setup/teraterm-term.html#UnicodeDecSpMapping
 # https://en.wikipedia.org/wiki/Box-drawing_character

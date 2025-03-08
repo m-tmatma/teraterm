@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * $Id: common.h,v 1.5 2007-08-18 08:52:18 maya Exp $
  */
 
@@ -96,7 +96,7 @@ inline bool YclAssert(bool condition, const char* message) {
 //}
 #endif
 
-// ƒeƒ“ƒvƒŒ[ƒgg—p‚ÉŒx‚ªo‚é‚Ì‚Å—}§‚·‚é
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä½¿ç”¨æ™‚ã«è­¦å‘ŠãŒå‡ºã‚‹ã®ã§æŠ‘åˆ¶ã™ã‚‹
 #pragma warning(disable: 4786)
 
 #endif//_YCL_COMMON_H_

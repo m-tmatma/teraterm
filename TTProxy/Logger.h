@@ -1,4 +1,4 @@
-#ifndef _YEBISOCKS_LOGGER_H_
+﻿#ifndef _YEBISOCKS_LOGGER_H_
 #define _YEBISOCKS_LOGGER_H_
 
 #include <YCL/String.h>

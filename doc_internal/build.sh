@@ -1,4 +1,4 @@
-# doxygen
+﻿# doxygen
 cmake -P doxygen.cmake
 
 # global

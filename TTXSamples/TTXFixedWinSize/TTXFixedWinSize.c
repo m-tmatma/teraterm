@@ -1,4 +1,4 @@
-#include "teraterm.h"
+﻿#include "teraterm.h"
 #include "tttypes.h"
 #include "ttplugin.h"
 // #include "ttlib.h"

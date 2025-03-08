@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 
 trap "OSC 111; CSI m; exit" 0 2
 

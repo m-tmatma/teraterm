@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 #
 # DECCARA / DECRARA 対象領域確認スクリプト
 # 同じ数字は同じ色 or 属性となるのが正しい。

@@ -1,4 +1,4 @@
---- openssl_org\Configurations\10-main.conf.orig 2019-09-10 22:13:07.000000000 +0900
+﻿--- openssl_org\Configurations\10-main.conf.orig 2019-09-10 22:13:07.000000000 +0900
 +++ openssl\Configurations\10-main.conf	2020-02-23 23:50:51.000000000 +0900
 ***************
 *** 1216,1222 ****

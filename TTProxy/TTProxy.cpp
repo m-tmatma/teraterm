@@ -1,4 +1,4 @@
-// ttx.cpp : DLL ƒAƒvƒŠƒP[ƒVƒ‡ƒ“—p‚ÌƒGƒ“ƒgƒŠ ƒ|ƒCƒ“ƒg‚ğ’è‹`‚µ‚Ü‚·B
+ï»¿// ttx.cpp : DLL ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã®ã‚¨ãƒ³ãƒˆãƒª ãƒã‚¤ãƒ³ãƒˆã‚’å®šç¾©ã—ã¾ã™ã€‚
 //
 
 #include "StdAfx.h"
@@ -28,7 +28,7 @@ extern "C" __declspec(dllexport) BOOL WINAPI DllMain(HINSTANCE instance, DWORD r
 	case DLL_THREAD_DETACH:
 		return TTProxy::getInstance().threadDetach();
 	default:
-		TTXBind(0, NULL);	// dummy TODO –¢g—p‚Åíœ‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚é
+		TTXBind(0, NULL);	// dummy TODO æœªä½¿ç”¨ã§å‰Šé™¤ã•ã‚Œãªã„ã‚ˆã†ã«ã™ã‚‹
 		break;
 	}
 	return FALSE;

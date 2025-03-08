@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Visual Studio 2008 or earlier doesn't have stdint.h
  */
 

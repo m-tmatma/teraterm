@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * Copyright (C) 2017- TeraTerm Project
  * All rights reserved.
  *
@@ -37,7 +37,7 @@
 #define TTSSH_RES_VERSION_STR           TTSSH_VERSION_STR(", ") ", 0"
 
 // TTSSH_RES_PRODUCT_VERSION_STR
-//	ƒŠƒ\[ƒXƒtƒ@ƒCƒ‹(rcƒtƒ@ƒCƒ‹) ProductVersion —p
+//	ãƒªã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«(rcãƒ•ã‚¡ã‚¤ãƒ«) ProductVersion ç”¨
 #if defined(TT_VERSION_SUBSTR_HASH)
 #define TTSSH_RES_PRODUCT_VERSION_STR \
 	TTSSH_VERSION_STR(".") " " TT_VERSION_SUBSTR_HASH

@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 
 CSI() {
   printf "\033[%s" "$1"

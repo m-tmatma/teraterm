@@ -1,4 +1,4 @@
-#
+﻿#
 # convert to HTML files for web server
 #
 TOHTML='perl 2sjis.pl'

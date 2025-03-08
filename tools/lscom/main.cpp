@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * (C) 2021- TeraTerm Project
  * All rights reserved.
  *
@@ -73,8 +73,8 @@ void DetectComPortByQueryDosDevice()
 
 void lscom_DetectComPorts()
 {
-	static WORD ComPortTable[MAXCOMPORT];  // g—p‰Â”\‚ÈCOMƒ|[ƒg”Ô†
-	static char *ComPortDesc[MAXCOMPORT];  // COMƒ|[ƒg‚ÌÚ×î•ñ
+	static WORD ComPortTable[MAXCOMPORT];  // ä½¿ç”¨å¯èƒ½ãªCOMãƒãƒ¼ãƒˆç•ªå·
+	static char *ComPortDesc[MAXCOMPORT];  // COMãƒãƒ¼ãƒˆã®è©³ç´°æƒ…å ±
 	int com_count = DetectComPorts(ComPortTable, MAXCOMPORT, ComPortDesc);
 
 	for(int i = 0; i < com_count; i++) {

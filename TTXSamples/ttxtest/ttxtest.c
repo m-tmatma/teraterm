@@ -1,4 +1,4 @@
-/* Tera Term extension mechanism
+﻿/* Tera Term extension mechanism
    Robert O'Callahan (roc+tt@cs.cmu.edu)
 
    Tera Term by Takashi Teranishi (teranishi@rikaxp.riken.go.jp)

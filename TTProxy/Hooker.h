@@ -1,4 +1,4 @@
-#ifndef _YEBISOCKS_HOOKER_H_
+﻿#ifndef _YEBISOCKS_HOOKER_H_
 #define _YEBISOCKS_HOOKER_H_
 
 #include <YCL/Hashtable.h>

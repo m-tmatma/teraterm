@@ -1,4 +1,4 @@
-/* Imported from OpenSSH-8.5p1, TeraTerm Project */
+﻿/* Imported from OpenSSH-8.5p1, TeraTerm Project */
 
 /*
  * Copyright (c) 2013 Damien Miller <djm@mindrot.org>

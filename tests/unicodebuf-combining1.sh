@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 #
 # unicodebuf-combining1.sh: 結合文字列の表示テスト1
 #
