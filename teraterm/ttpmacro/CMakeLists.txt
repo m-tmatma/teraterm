@@ -160,6 +160,12 @@ install(
 )
 
 if(MSVC)
+  target_compile_options(
+    ${PACKAGE_NAME}
+    PRIVATE /FA /Fa${CMAKE_BINARY_DIR}/
+  )
+endif()
+if(MSVC)
   install(
     FILES
     $<TARGET_PDB_FILE:${PACKAGE_NAME}>

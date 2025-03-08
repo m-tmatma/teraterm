@@ -81,3 +81,10 @@ target_link_libraries(
   ${CMAKE_CURRENT_SOURCE_DIR}/${EXTLIB}/libpng/lib/libpng16_static.lib
   ${CMAKE_CURRENT_SOURCE_DIR}/${EXTLIB}/zlib/lib/zlibstatic.lib
   )
+
+if(MSVC)
+  target_compile_options(
+    ttspipng
+    PRIVATE /FA /Fa${CMAKE_BINARY_DIR}/
+  )
+endif()
