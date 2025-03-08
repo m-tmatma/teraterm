@@ -37,7 +37,8 @@ if "%COMPILER%" == "mingw_x64"  (
 )
 if exist libs\omit_build_libs_%COMPILER% goto omit_build_libs
 cd libs
-"%CMAKE_COMMAND%" -DCMAKE_GENERATOR="%GENERATOR%" %CMAKE_OPTION_LIBS% -P buildall.cmake
+echo "%CMAKE_COMMAND%" -DCMAKE_GENERATOR="%GENERATOR%" %CMAKE_OPTION_LIBS% -P buildall.cmake
+     "%CMAKE_COMMAND%" -DCMAKE_GENERATOR="%GENERATOR%" %CMAKE_OPTION_LIBS% -P buildall.cmake
 rem if exist build rmdir /s /q build
 rem if exist download rmdir /s /q download
 cd ..
@@ -49,8 +50,15 @@ if exist cmakecache.txt del cmakecache.txt
 set ZIP_FILE=teraterm-%VERSION%-r%SVNVERSION%-%DATE%_%TIME%-appveyor-%COMPILER_FRIENDLY%.zip
 set SETUP_FILE=teraterm-%VERSION%-r%SVNVERSION%-%DATE%_%TIME%-appveyor-%COMPILER_FRIENDLY%
 set SNAPSHOT_DIR=teraterm-%VERSION%-r%SVNVERSION%-%DATE%_%TIME%-appveyor-%COMPILER_FRIENDLY%
-"%CMAKE_COMMAND%" .. -G "%GENERATOR%" %CMAKE_OPTION_GENERATE% -DSNAPSHOT_DIR=%SNAPSHOT_DIR% -DSETUP_ZIP=%ZIP_FILE% -DSETUP_EXE=%SETUP_FILE% -DSETUP_RELEASE=%RELEASE%
-"%CMAKE_COMMAND%" --build . --target install %CMAKE_OPTION_BUILD%
-"%CMAKE_COMMAND%" --build . --target zip
-"%CMAKE_COMMAND%" --build . --target inno_setup
+echo "%CMAKE_COMMAND%" .. -G "%GENERATOR%" %CMAKE_OPTION_GENERATE% -DSNAPSHOT_DIR=%SNAPSHOT_DIR% -DSETUP_ZIP=%ZIP_FILE% -DSETUP_EXE=%SETUP_FILE% -DSETUP_RELEASE=%RELEASE%
+     "%CMAKE_COMMAND%" .. -G "%GENERATOR%" %CMAKE_OPTION_GENERATE% -DSNAPSHOT_DIR=%SNAPSHOT_DIR% -DSETUP_ZIP=%ZIP_FILE% -DSETUP_EXE=%SETUP_FILE% -DSETUP_RELEASE=%RELEASE%
+
+echo "%CMAKE_COMMAND%" --build . --target install %CMAKE_OPTION_BUILD%
+     "%CMAKE_COMMAND%" --build . --target install %CMAKE_OPTION_BUILD%
+
+echo "%CMAKE_COMMAND%" --build . --target zip
+     "%CMAKE_COMMAND%" --build . --target zip
+
+echo "%CMAKE_COMMAND%" --build . --target inno_setup
+     "%CMAKE_COMMAND%" --build . --target inno_setup
 cd ..
