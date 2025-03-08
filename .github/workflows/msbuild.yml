@@ -54,6 +54,10 @@ jobs:
         chcp 932
         buildtools/install_innosetup.bat
 
+    - name: find asm
+      run: |
+        dir /s /b *.asm
+
     - name: Upload artifacts (asm)
       uses: actions/upload-artifact@v4
       with:
