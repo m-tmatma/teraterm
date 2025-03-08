@@ -37,7 +37,6 @@ jobs:
 
     - name: download setup-x86_64.exe
       run: |
-        chcp 932
         mkdir buildtools\cygwin64
         curl https://www.cygwin.com/setup-x86_64.exe --output buildtools\cygwin64\setup-x86_64.exe
 
@@ -45,22 +44,18 @@ jobs:
 
     - name: before_build (install_cygwin)
       run: |
-        chcp 932
         buildtools/install_cygwin.bat
 
     - name: before_build (install_innosetup)
       run: |
-        chcp 932
         buildtools/install_innosetup.bat
 
     - name: build_script
       run: |
-        chcp 932
         ci_scripts/build_appveyor_release_bat.bat
 
     - name: after_build
       run: |
-        chcp 932
         ci_scripts/build_appveyor_release_bat_pre_cache.bat
 
     - name: Upload artifacts
