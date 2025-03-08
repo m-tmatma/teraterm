@@ -724,6 +724,9 @@ static HDDEDATA AcceptExecute(HSZ TopicHSz, HDDEDATA Data)
 
 		} else if (strncmp(p, "halt", 4) == 0) {
 			FLogRotateHalt();
+		} else if (strncmp(p, "reverse", 7) == 0) {
+			s = atoi(&p[8]);
+			FLogRotateReverse(s);
 		}
 		break;
 	}

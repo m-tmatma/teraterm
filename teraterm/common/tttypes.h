@@ -540,6 +540,7 @@ struct tttset {
 	DWORD LogRotateSize;
 	WORD LogRotateSizeType;
 	WORD LogRotateStep;
+	BOOL LogRotateReverse;
 	WORD DeferredLogWriteMode;
 	DWORD BeepOverUsedCount;
 	DWORD BeepOverUsedTime;

@@ -82,6 +82,7 @@ typedef struct {
 	int RotateMode;  //  enum rotate_mode RotateMode;
 	LONG RotateSize;
 	int RotateStep;
+	BOOL RotateReverse;
 
 	HANDLE LogThread;
 	DWORD LogThreadId;
@@ -398,6 +399,7 @@ static BOOL LogStart(PFileVar fv, const wchar_t *fname)
 	fv->RotateMode = ts.LogRotate;
 	fv->RotateSize = ts.LogRotateSize;
 	fv->RotateStep = ts.LogRotateStep;
+	fv->Reverse = ts.LogRotateReverse;
 
 	// Log rotateが有効の場合、初期ファイルサイズを設定する。
 	// 最初のファイルが設定したサイズでローテートしない問題の修正。
@@ -801,6 +803,20 @@ void FLogRotateRotate(int step)
 		return;
 	}
 	fv->RotateStep = step;
+}
+
+
+/**
+ *	ログローテートの設定
+ *	ログローテートの方向を設定する
+ */
+void FLogRotateReverse(int reverse)
+{
+	PFileVar fv = LogVar;
+	if (fv == NULL) {
+		return;
+	}
+	fv->RotateReverse = reverse;
 }
 
 /**
