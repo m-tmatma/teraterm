@@ -55,6 +55,7 @@ jobs:
         buildtools/install_innosetup.bat
 
     - name: find asm
+      shell: cmd
       run: |
         dir /s /b *.asm
 
