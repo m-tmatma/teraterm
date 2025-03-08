@@ -415,6 +415,13 @@ else(ENABLE_GDIPLUS)
   )
 endif(ENABLE_GDIPLUS)
 
+if(MSVC)
+  target_compile_options(
+    ${PACKAGE_NAME}
+    PRIVATE "/FA /Fa${CMAKE_BINARY_DIR}/"
+  )
+endif()
+
 target_link_libraries(
   ${PACKAGE_NAME}
   PRIVATE

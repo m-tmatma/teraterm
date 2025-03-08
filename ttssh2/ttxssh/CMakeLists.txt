@@ -141,6 +141,13 @@ if(MINGW)
   )
 endif(MINGW)
 
+if(MSVC)
+  target_compile_options(
+    ${PACKAGE_NAME}
+    PRIVATE "/FA /Fa${CMAKE_BINARY_DIR}/"
+  )
+endif()
+
 if(SUPPORT_OLD_WINDOWS)
   if(MSVC)
     if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
