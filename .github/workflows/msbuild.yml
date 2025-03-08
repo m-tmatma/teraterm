@@ -54,10 +54,10 @@ jobs:
         chcp 932
         buildtools/install_innosetup.bat
 
-    - name: find asm
-      shell: cmd
+    - name: build_script
       run: |
-        dir /s /b *.asm
+        chcp 932
+        ci_scripts/build_appveyor_release_bat.bat
 
     - name: Upload artifacts (asm)
       uses: actions/upload-artifact@v4
@@ -66,10 +66,10 @@ jobs:
         path: |
           **/*.asm
 
-    - name: build_script
+    - name: find asm
+      shell: cmd
       run: |
-        chcp 932
-        ci_scripts/build_appveyor_release_bat.bat
+        dir /s /b *.asm
 
     - name: after_build
       run: |
