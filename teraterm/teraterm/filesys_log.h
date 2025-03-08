@@ -54,6 +54,7 @@ wchar_t *FLogGetLogFilenameBase(const wchar_t *filename);
 void logfile_lock_initialize(void);
 void FLogPause(BOOL Pause);
 void FLogRotateSize(size_t size);
+void FLogRotateStyle(enum rotate_style RotateStyle);
 void FLogRotateRotate(int step);
 void FLogRotateHalt(void);
 void FLogClose(void);
