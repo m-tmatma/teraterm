@@ -27,7 +27,6 @@ jobs:
       CMAKE_OPTION_LIBS: "-DARCHITECTURE: win32"
       CMAKE_OPTION_GENERATE: "-A Win32"
       CMAKE_OPTION_BUILD: "--config Release"
-      BUILD_DIR: "build_${{ env.COMPILER_FRIENDLY }}_win32"
 
     steps:
     - uses: actions/checkout@v4
