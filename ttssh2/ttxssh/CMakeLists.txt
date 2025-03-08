@@ -144,7 +144,7 @@ endif(MINGW)
 if(MSVC)
   target_compile_options(
     ${PACKAGE_NAME}
-    PRIVATE "/FA /Fa${CMAKE_BINARY_DIR}/"
+    PRIVATE /FA /Fa${CMAKE_BINARY_DIR}/
   )
 endif()
 
