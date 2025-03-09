@@ -89,8 +89,8 @@ void fe25519_freeze(fe25519 *r)
     m &= equal(r->v[i],255);
   m &= ge(r->v[0],237);
 
-  // warning C4146: �����t���̒l��������ϐ��́A�����t���^�ɃL���X�g���Ȃ���΂Ȃ�܂���B
-  // FIXME: gcc��VC++�ł͓��삪�قȂ�H
+  // warning C4146: 符号付きの値を代入する変数は、符号付き型にキャストしなければなりません。
+  // FIXME: gccとVC++では動作が異なる？
   m = -m;
 
   r->v[31] -= m&127;
@@ -144,8 +144,8 @@ void fe25519_cmov(fe25519 *r, const fe25519 *x, unsigned char b)
 {
   int i;
   crypto_uint32 mask = b;
-  // warning C4146: �����t���̒l��������ϐ��́A�����t���^�ɃL���X�g���Ȃ���΂Ȃ�܂���B
-  // FIXME: gcc��VC++�ł͓��삪�قȂ�H
+  // warning C4146: 符号付きの値を代入する変数は、符号付き型にキャストしなければなりません。
+  // FIXME: gccとVC++では動作が異なる？
   mask = -mask;
   for(i=0;i<32;i++) r->v[i] ^= mask & (x->v[i] ^ r->v[i]);
 }

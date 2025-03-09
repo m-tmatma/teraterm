@@ -36,10 +36,10 @@
 extern "C" {
 #endif
 
-// “à•”—p
+// å†…éƒ¨ç”¨
 BOOL OpenExternalSetupTab(HWND hWndParent, CAddSettingPropSheetDlgPage page);
 
-// vtwin‚©‚çg—p
+// vtwinã‹ã‚‰ä½¿ç”¨
 void OpenExternalSetup(HWND hWndParent);
 void OpenSetupTerminal();
 void OpenSetupWin();

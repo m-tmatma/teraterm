@@ -55,7 +55,7 @@ typedef struct {
 	BOOL EnqFlag;
 	BYTE CheckSum;
 	TProtoLog *log;
-	const char *FullName;	// Windowsã‚Ìƒtƒ@ƒCƒ‹–¼ UTF-8
+	const char *FullName;	// Windowsä¸Šã®ãƒ•ã‚¡ã‚¤ãƒ«å UTF-8
 	WORD LogState;
 
 	BOOL FileOpen;
