@@ -70,15 +70,15 @@ static UINT_PTR CALLBACK TFontHook(HWND Dialog, UINT Message, WPARAM wParam, LPA
 		case WM_COMMAND:
 			if (LOWORD(wParam) == cmb2) {
 				if (HIWORD(wParam) == CBN_SELCHANGE) {
-					// �t�H���g�̕ύX�ɂ��(���b�Z�[�W�ɂ��)�X�^�C���̕ύX�ł�
-					// cmb2 ����̒ʒm�����Ȃ�
+					// フォントの変更による(メッセージによる)スタイルの変更では
+					// cmb2 からの通知が来ない
 					SendMessage(GetDlgItem(Dialog, cmb2), CB_GETCURSEL, 0, 0);
 				}
 			}
 			else if (LOWORD(wParam) == cmb1) {
 				if (HIWORD(wParam) == CBN_SELCHANGE) {
-					// �t�H���g�̕ύX�O�Ɉꎞ�ۑ����ꂽ�X�^�C����
-					// �����𔲂������Ƃɉ��߂ăZ�b�g����Ă��܂��悤��
+					// フォントの変更前に一時保存されたスタイルが
+					// ここを抜けたあとに改めてセットされてしまうようだ
 					SendMessage(GetDlgItem(Dialog, cmb2), CB_GETCURSEL, 0, 0);
 				}
 			}
@@ -117,8 +117,8 @@ static BOOL ChooseFontDlgForTek(HWND WndParent, LPLOGFONTA LogFont, const TTTSet
 BOOL WINAPI _ChooseFontDlg(HWND WndParent, LPLOGFONTA LogFont, /*const*/ TTTSet *ts)
 {
 	if (AddsettingCheckWin(WndParent) == ADDSETTING_WIN_TEK) {
-		// TEK Window ����R�[�����ꂽ�ꍇ
-		// �t�H���g�I���_�C�A���O���g�p����
+		// TEK Window からコールされた場合
+		// フォント選択ダイアログを使用する
 		return ChooseFontDlgForTek(WndParent, LogFont, ts);
 	}
 

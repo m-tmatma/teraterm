@@ -332,7 +332,7 @@ enum kex_modes {
 };
 
 
-// ƒzƒXƒgƒL[(SSH1, SSH2ŠÜ‚Ş)‚Ìƒf[ƒ^\‘¢ (2006.3.21 yutaka)
+// ãƒ›ã‚¹ãƒˆã‚­ãƒ¼(SSH1, SSH2å«ã‚€)ã®ãƒ‡ãƒ¼ã‚¿æ§‹é€  (2006.3.21 yutaka)
 typedef struct Key {
 	// host key type
 	ssh_keytype type;
@@ -527,8 +527,8 @@ typedef struct PacketList {
 	struct PacketList *next;
 } PacketList_t;
 
-// SCPóMˆ—‚É‚¨‚¯‚éƒtƒ[§Œä‚Ìè‡’l
-// “K—pæ scp_t.filercvsize
+// SCPå—ä¿¡å‡¦ç†ã«ãŠã‘ã‚‹ãƒ•ãƒ­ãƒ¼åˆ¶å¾¡ã®é–¾å€¤
+// é©ç”¨å…ˆ scp_t.filercvsize
 #define SCPRCV_HIGH_WATER_MARK (1 * 1024 * 1024)  // 1MB
 #define SCPRCV_LOW_WATER_MARK (0)  // 0MB
 
