@@ -106,6 +106,14 @@ enum rotate_mode {
 	ROTATE_SIZE
 };
 
+
+// log rotate style
+enum rotate_style {
+	ROTATE_STYLE_NONE,
+	ROTATE_STYLE_DESCENDING,
+	ROTATE_STYLE_ASCENDING,
+};
+
 // Log Timestamp Type
 enum LogTimestampType {
     TIMESTAMP_LOCAL,
@@ -518,6 +526,7 @@ struct tttset {
 	char ScpSendDir[MAXPATHLEN];				// SCP 送信先(ホストのディレクトリ)
 	char reserver_BGImageFilePath[MAX_PATH];
 	int LogRotate;		//	enum rotate_mode LogRotate;
+	enum rotate_style LogRotateStyle;
 	DWORD LogRotateSize;
 	WORD LogRotateSizeType;
 	WORD LogRotateStep;

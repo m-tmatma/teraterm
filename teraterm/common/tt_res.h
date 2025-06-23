@@ -191,6 +191,8 @@
 #define IDC_OPT_HIDEDLG                 2539
 #define IDC_OPT_INCBUF                  2540
 #define IDC_OPT_TIMESTAMP_TYPE          2541
+#define IDC_ROTATE_STYLE_TEXT           2542
+#define IDC_OPT_ROTATE_STYLE            2543
 #define IDC_TRIMNLCHAR                  2564
 #define IDC_CLIPBOARD_NOTIFY            2566
 #define IDC_TITLEFMT_GROUP              2568
@@ -342,7 +344,7 @@
 #define ID_FILE_TERATERMMENU            52006
 
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1

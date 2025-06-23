@@ -32,6 +32,25 @@ logrotate 'halt'
 	    If the &lt;size&gt; is followed by K, the size is assumed to be in kilobytes.
 	    If the M is used, the size is in megabytes.</dd>
 
+	<dt class="macro">'style' &lt;style&gt;</dt>
+	<dd>In 'descending' style, log file which has smaller index is newer file. log file which has larger index is older file.<br>
+	    <br>
+	    Example: logfile name is c:\hogehoge\teraterm.log<br>
+	    newest file: c:\hogehoge\teraterm.log.1<br>
+	    2nd newer file: c:\hogehoge\teraterm.log.2<br>
+	    3rd newer file: c:\hogehoge\teraterm.log.3<br>
+	    ...<br>
+	    <br>
+	    In 'ascending' style, log file which has larger index is newer file. log file which has smaller index is older file.<br>
+	    Assign indexes in ascending order of age. Once an index is assigned, it should not be changed.<br>
+	    <br>
+	    Example: logfile name is c:\hogehoge\teraterm.log<br>
+	    oldest file: c:\hogehoge\teraterm.log.1<br>
+	    2nd older file: c:\hogehoge\teraterm.log.2<br>
+	    3rd older file: c:\hogehoge\teraterm.log.3<br>
+	    ...<br>
+	    <br>
+
 	<dt class="macro">'rotate' &lt;count&gt;</dt>
 	<dd>Log files are rotated &lt;count&gt; times before being removed.<br>
 	    The &lt;count&gt; value must be larger than 1.</dd>
@@ -60,6 +79,7 @@ logopen 'teraterm_sample.log' 0 0
 ; Start log rotation
 logrotate 'size' '32K'
 logrotate 'rotate' 3
+logrotate 'style' 'ascending'
 
 pause 600
 ; Stop log rotation

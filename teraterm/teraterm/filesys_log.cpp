@@ -36,6 +36,7 @@
 #include <process.h>
 #include <windows.h>
 #include <assert.h>
+#include <shlwapi.h>
 
 #include "teraterm.h"
 #include "tttypes.h"
@@ -57,6 +58,8 @@
 #include "filesys.h"  // for ProtoGetProtoFlag()
 
 #define TitLog      L"Log"
+
+#pragma comment(lib, "Shlwapi.lib")
 
 /*
    Line Head flag for timestamping
@@ -80,6 +83,7 @@ typedef struct {
 
 	// log rotate
 	int RotateMode;  //  enum rotate_mode RotateMode;
+	enum rotate_style RotateStyle;
 	LONG RotateSize;
 	int RotateStep;
 
@@ -396,6 +400,7 @@ static BOOL LogStart(PFileVar fv, const wchar_t *fname)
 
 	// Log rotate configuration
 	fv->RotateMode = ts.LogRotate;
+	fv->RotateStyle = ts.LogRotateStyle;
 	fv->RotateSize = ts.LogRotateSize;
 	fv->RotateStep = ts.LogRotateStep;
 
@@ -518,6 +523,98 @@ static inline void logfile_unlock(void)
 	LeaveCriticalSection(&g_filelog_lock);
 }
 
+
+// 最大のログファイルインデックスを取得する
+// 前提
+// FullName はユーザーが指定したファイル名
+// インデックス部分は .数値 の形式とする
+// 例
+// FullName: c:\hogehoge\teraterm.log
+// インデックス付きのログファイル名
+// c:\hogehoge\teraterm.log.1
+// c:\hogehoge\teraterm.log.2
+// ...
+// c:\hogehoge\teraterm.log.10
+//
+// →　この場合この関数は 10 を返す
+static int FindMaxLogIndex(wchar_t *FullName)
+{
+	int maxIndex = 0;
+	wchar_t *pattern;
+	if (aswprintf(&pattern, L"%s.*", FullName) < 0) {
+		return 0;
+	}
+
+	// FindFileFirst でファイルを検索し、最新のファイルのインデックスを取得
+	WIN32_FIND_DATAW FindFileData;
+	HANDLE hFind = FindFirstFileW(pattern, &FindFileData);
+	free(pattern);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			// ファイル名の最後の数字を取得
+			wchar_t *ext = PathFindExtensionW(FindFileData.cFileName);
+			if (ext != NULL) {
+				wchar_t *end;
+				int num = wcstol(ext + 1, &end, 10);
+				if (num > maxIndex) {
+					maxIndex = num;
+				}
+			}
+		} while (FindNextFileW(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+	return maxIndex;
+}
+
+// 指定インデックス未満のファイルを削除する
+// FullName はユーザーが指定したファイル名
+// インデックス部分は .数値 の形式とする
+static void RemoveFilesLessThanIndex(wchar_t *FullName, int index_less_than)
+{
+	wchar_t *pattern;
+	if (aswprintf(&pattern, L"%s.*", FullName) < 0) {
+		return;
+	}
+
+	// FindFileFirst でファイルを検索し、最新のファイルのインデックスを取得
+	WIN32_FIND_DATAW FindFileData;
+	HANDLE hFind = FindFirstFileW(pattern, &FindFileData);
+	free(pattern);
+
+	// FullName のディレクトリ名を取得
+	wchar_t *dir = _wcsdup(FullName);
+	if (dir == NULL) {
+		if (hFind != INVALID_HANDLE_VALUE) {
+			FindClose(hFind);
+		}
+		return;
+	}
+	PathRemoveFileSpecW(dir);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			// ファイル名の最後の数字を取得
+			wchar_t *ext = PathFindExtensionW(FindFileData.cFileName);
+			if (ext != NULL) {
+				wchar_t *end;
+				int num = wcstol(ext + 1, &end, 10);
+				if (num < index_less_than) {
+					// フルパスを生成
+					wchar_t *fullpath;
+					if (aswprintf(&fullpath, L"%s\\%s", dir, FindFileData.cFileName) >= 0) {
+						DeleteFileW(fullpath);
+						free(fullpath);
+					}
+				}
+			}
+		} while (FindNextFileW(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+
+	free(dir);
+}
+
 // ログをローテートする。
 // (2013.3.21 yutaka)
 static void LogRotate(PFileVar fv)
@@ -543,38 +640,73 @@ static void LogRotate(PFileVar fv)
 	// いったん今のファイルをクローズして、別名のファイルをオープンする。
 	CloseFileSync(fv);
 
-	// 世代ローテーションのステップ数の指定があるか
-	if (fv->RotateStep > 0)
-		loopmax = fv->RotateStep;
+	switch(fv->RotateStyle){
+	case ROTATE_STYLE_ASCENDING:
+		{
+			// 古いファイルから新しいファイルに .1 から .n までのインデックスにリネームする
+			int maxIndex = FindMaxLogIndex(fv->FullName);
 
-	for (i = 1 ; i <= loopmax ; i++) {
-		wchar_t *filename;
-		aswprintf(&filename, L"%s.%d", fv->FullName, i);
-		DWORD attr = GetFileAttributesW(filename);
-		free(filename);
-		if (attr == INVALID_FILE_ATTRIBUTES)
-			break;
-	}
-	if (i > loopmax) {
-		// 世代がいっぱいになったら、最古のファイルから廃棄する。
-		i = loopmax;
-	}
+			// 次のインデックス用に更新
+			maxIndex++;
 
-	// 別ファイルにリネーム。
-	for (k = i-1 ; k >= 0 ; k--) {
-		wchar_t *oldfile;
-		if (k == 0)
-			oldfile = _wcsdup(fv->FullName);
-		else
-			aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
-		wchar_t *newfile;
-		aswprintf(&newfile, L"%s.%d", fv->FullName, k+1);
-		DeleteFileW(newfile);
-		if (MoveFileW(oldfile, newfile) == 0) {
-			OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+			// ファイルをリネーム
+			wchar_t *newfile;
+			aswprintf(&newfile, L"%s.%d", fv->FullName, maxIndex);
+			if (MoveFileW(fv->FullName, newfile) == 0) {
+				OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+			}
+			free(newfile);
+
+			if (fv->RotateStep > 0) {
+				// 指定された世代数を超えたファイルを削除する
+				RemoveFilesLessThanIndex(fv->FullName, maxIndex - fv->RotateStep + 1);
+			}
 		}
-		free(oldfile);
-		free(newfile);
+		break;
+
+	case ROTATE_STYLE_DESCENDING:
+	default:
+		{
+			// 世代ローテーションのステップ数の指定があるか
+			if (fv->RotateStep > 0)
+				loopmax = fv->RotateStep;
+
+			for (i = 1 ; i <= loopmax ; i++) {
+				wchar_t *filename;
+				aswprintf(&filename, L"%s.%d", fv->FullName, i);
+				if (filename != NULL) {
+					// ファイルが存在するか
+					DWORD attr = GetFileAttributesW(filename);
+					free(filename);
+					if (attr == INVALID_FILE_ATTRIBUTES)
+						break;
+				}
+			}
+			if (i > loopmax) {
+				// 世代がいっぱいになったら、最古のファイルから廃棄する。
+				i = loopmax;
+			}
+
+			// 別ファイルにリネーム。
+			for (k = i-1 ; k >= 0 ; k--) {
+				wchar_t *oldfile;
+				if (k == 0)
+					oldfile = _wcsdup(fv->FullName);
+				else
+					aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
+				wchar_t *newfile;
+				aswprintf(&newfile, L"%s.%d", fv->FullName, k+1);
+				if (newfile != NULL && oldfile != NULL) {
+					DeleteFileW(newfile);
+					if (MoveFileW(oldfile, newfile) == 0) {
+						OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+					}
+				}
+				free(oldfile);
+				free(newfile);
+			}
+		}
+		break;
 	}
 
 	// 再オープン
@@ -791,6 +923,18 @@ void FLogRotateSize(size_t size)
 }
 
 /**
+ *	ログローテートスタイルの設定
+ */
+void FLogRotateStyle(enum rotate_style RotateStyle)
+{
+	PFileVar fv = LogVar;
+	if (fv == NULL) {
+		return;
+	}
+	fv->RotateStyle = RotateStyle;
+}
+
+/**
  *	ログローテートの設定
  *	ログファイルの世代を設定する
  */
@@ -814,6 +958,7 @@ void FLogRotateHalt(void)
 		return;
 	}
 	fv->RotateMode = ROTATE_NONE;
+	fv->RotateStyle = ROTATE_STYLE_DESCENDING;
 	fv->RotateSize = 0;
 	fv->RotateStep = 0;
 }

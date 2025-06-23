@@ -1069,6 +1069,13 @@ void PASCAL _ReadIniFile(const wchar_t *FName, PTTSet ts)
 	ts->LogRotateSize = GetPrivateProfileInt(Section, "LogRotateSize", 0, FName);
 	ts->LogRotateSizeType = GetPrivateProfileInt(Section, "LogRotateSizeType", 0, FName);
 	ts->LogRotateStep = GetPrivateProfileInt(Section, "LogRotateStep", 0, FName);
+	GetPrivateProfileString(Section, "LogRotateStyle", "", Temp, sizeof(Temp), FName);
+	if (_stricmp(Temp, "ascending") == 0)
+		ts->LogRotateStyle = ROTATE_STYLE_ASCENDING;
+	else if (_stricmp(Temp, "descending") == 0)
+		ts->LogRotateStyle = ROTATE_STYLE_DESCENDING;
+	else
+		ts->LogRotateStyle = ROTATE_STYLE_DESCENDING;
 
 	/* Deferred Log Write Mode (2013.4.20 yutaka) */
 	ts->DeferredLogWriteMode = GetOnOff(Section, "DeferredLogWriteMode", FName, TRUE);
@@ -2570,6 +2577,12 @@ void PASCAL _WriteIniFile(const wchar_t *FName, PTTSet ts)
 	WriteInt(Section, "LogRotateSize", FName, ts->LogRotateSize);
 	WriteInt(Section, "LogRotateSizeType", FName, ts->LogRotateSizeType);
 	WriteInt(Section, "LogRotateStep", FName, ts->LogRotateStep);
+	if (ts->LogRotateStyle == ROTATE_STYLE_ASCENDING) {
+		WritePrivateProfileString(Section, "LogRotateStyle", "ascending", FName);
+	}
+	else {
+		WritePrivateProfileString(Section, "LogRotateStyle", "descending", FName);
+	}
 
 	/* Deferred Log Write Mode (2013.4.20 yutaka) */
 	WriteOnOff(Section, "DeferredLogWriteMode", FName, ts->DeferredLogWriteMode);

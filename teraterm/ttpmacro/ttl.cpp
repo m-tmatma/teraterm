@@ -3159,7 +3159,7 @@ static WORD TTLLogRotate(void)
 	char Str[MaxStrLen];
 	char Str2[MaxStrLen];
 	char buf[MaxStrLen*2];
-	int size, num, len;
+	int size, num = 0, len = 0;
 
 	Err = 0;
 	GetStrVal(Str, &Err);
@@ -3194,7 +3194,25 @@ static WORD TTLLogRotate(void)
 			if (Err == 0)
 				_snprintf_s(buf, sizeof(buf), _TRUNCATE, "%s %u", Str, size);
 		}
-
+	} else if (strcmp(Str, CmdString_RotateStyle) == 0) {  // ローテートのスタイル
+		if (CheckParameterGiven()) {
+			enum rotate_style RotateStyle = ROTATE_STYLE_DESCENDING;
+			Err = 0;
+			GetStrVal(Str2, &Err);
+			if (Err == 0) {
+				if (strcmp(Str2, "ascending") == 0) {
+					RotateStyle = ROTATE_STYLE_ASCENDING;
+				}
+				else if (strcmp(Str2, "descending") == 0) {
+					RotateStyle = ROTATE_STYLE_DESCENDING;
+				}
+				else {
+					Err = ErrSyntax;
+				}
+			}
+			if (Err == 0)
+				_snprintf_s(buf, sizeof(buf), _TRUNCATE, "%s %u", Str, RotateStyle);
+		}
 	} else if (strcmp(Str, "rotate") == 0) {  // ローテートの世代数
 		if (CheckParameterGiven()) {
 			Err = 0;

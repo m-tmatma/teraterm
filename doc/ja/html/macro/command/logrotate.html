@@ -32,6 +32,25 @@ logrotate 'halt'
 	    &lt;size&gt;は128以上であること。<br>
 	    末尾に"K"があるとキロバイト単位、"M"があるとメガバイト単位になる。</dd>
 
+	<dt class="macro">'style' '&lt;style&gt;'</dt>
+	<dd>'descending' スタイルの場合、小さいインデックスのログは新しいファイルになる。大きなインデックスのファイルは古いファイルになる。<br>
+	    <br>
+	    例: ログファイル名 c:\hogehoge\teraterm.log<br>
+	    最新のファイル c:\hogehoge\teraterm.log.1<br>
+	    2番目に新しいログファイル c:\hogehoge\teraterm.log.2<br>
+	    3番目に新しいログファイル c:\hogehoge\teraterm.log.3<br>
+	    ...<br>
+	    <br>
+	    'ascending' スタイルの場合、大きなインデックスのログは新しいファイルになる。小さいインデックスのファイルは古いファイルになる。<br>
+	    古い順番にインデックスを振る。一度割り当てたインデックスは変更しない。<br>
+	    <br>
+	    例: ログファイル名 c:\hogehoge\teraterm.log<br>
+	    最古のファイル c:\hogehoge\teraterm.log.1<br>
+	    2番目に古いログファイル c:\hogehoge\teraterm.log.2<br>
+	    3番目に古いログファイル c:\hogehoge\teraterm.log.3<br>
+	    ...<br>
+	    <br>
+
 	<dt class="macro">'rotate' &lt;count&gt;</dt>
 	<dd>ログファイルの世代を&lt;count&gt;にする。<br>
 	    &lt;count&gt;は1以上であること。</dd>
@@ -60,6 +79,7 @@ logopen 'teraterm_sample.log' 0 0
 ; Start log rotation
 logrotate 'size' '32K'
 logrotate 'rotate' 3
+logrotate 'style' 'ascending'
 
 pause 600
 ; Stop log rotation
