@@ -77,6 +77,7 @@ typedef struct {
 	enum rotate_mode RotateMode;
 	LONG RotateSize;
 	int RotateStep;
+	bool RotateAscending;
 
 	HANDLE LogThread;
 	DWORD LogThreadId;
@@ -388,6 +389,7 @@ static BOOL LogStart(PFileVar fv, const wchar_t *fname)
 	fv->RotateMode = (enum rotate_mode)ts.LogRotate;
 	fv->RotateSize = ts.LogRotateSize;
 	fv->RotateStep = ts.LogRotateStep;
+	fv->RotateAscending = (ts.LogRotateAscending != 0);
 
 	if (fv->RotateMode != ROTATE_NONE) {
 		// Log rotateが有効の場合、初期ファイルサイズを設定する。
@@ -530,34 +532,99 @@ static void LogRotate(PFileVar fv)
 	if (fv->RotateStep > 0)
 		loopmax = fv->RotateStep;
 
-	for (i = 1 ; i <= loopmax ; i++) {
-		wchar_t *filename;
-		aswprintf(&filename, L"%s.%d", fv->FullName, i);
-		DWORD attr = GetFileAttributesW(filename);
-		free(filename);
-		if (attr == INVALID_FILE_ATTRIBUTES)
-			break;
-	}
-	if (i > loopmax) {
-		// 世代がいっぱいになったら、最古のファイルから廃棄する。
-		i = loopmax;
-	}
+	if (fv->RotateAscending) {
+		// Ascending=on: .1 が最古、番号が大きいほど新しいローテート
 
-	// 別ファイルにリネーム。
-	for (k = i-1 ; k >= 0 ; k--) {
-		wchar_t *oldfile;
-		if (k == 0)
-			oldfile = _wcsdup(fv->FullName);
-		else
-			aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
-		wchar_t *newfile;
-		aswprintf(&newfile, L"%s.%d", fv->FullName, k+1);
-		DeleteFileW(newfile);
-		if (MoveFileW(oldfile, newfile) == 0) {
-			OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+		// 既存の最大 suffix を求める。
+		i = 0;
+		for (k = 1 ; k <= loopmax ; k++) {
+			wchar_t *filename;
+			aswprintf(&filename, L"%s.%d", fv->FullName, k);
+			DWORD attr = GetFileAttributesW(filename);
+			free(filename);
+			if (attr != INVALID_FILE_ATTRIBUTES)
+				i = k;
 		}
-		free(oldfile);
-		free(newfile);
+
+		// 世代がいっぱいなら .1（最古）を捨て、.2.. を繰り下げて空きを作る。
+		while (i >= loopmax) {
+			wchar_t *del1;
+			aswprintf(&del1, L"%s.1", fv->FullName);
+			DeleteFileW(del1);
+			free(del1);
+			for (k = 2 ; k <= i ; k++) {
+				wchar_t *oldfile;
+				wchar_t *newfile;
+				aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
+				aswprintf(&newfile, L"%s.%d", fv->FullName, k - 1);
+				if (MoveFileW(oldfile, newfile) == 0) {
+					OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+				}
+				free(oldfile);
+				free(newfile);
+			}
+			i--;
+		}
+
+		// 現在のログを最大番号（最新アーカイブ）へリネームする。
+		{
+			wchar_t *oldfile = _wcsdup(fv->FullName);
+			wchar_t *newfile;
+			aswprintf(&newfile, L"%s.%d", fv->FullName, i + 1);
+			if (MoveFileW(oldfile, newfile) == 0) {
+				OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+			}
+			free(oldfile);
+			free(newfile);
+		}
+	} else {
+		// 通常モード（Ascending=off）: .1 が最新、番号が大きいほど古いアーカイブ（Unix logrotate 方式）
+
+		// 連続して存在するアーカイブ数を求める。
+		i = 0;
+		for (k = 1 ; k <= loopmax ; k++) {
+			wchar_t *filename;
+			aswprintf(&filename, L"%s.%d", fv->FullName, k);
+			DWORD attr = GetFileAttributesW(filename);
+			free(filename);
+			if (attr == INVALID_FILE_ATTRIBUTES)
+				break;
+			i = k;
+		}
+
+		// 世代がいっぱいなら最古（.loopmax）を捨てる。
+		if (i >= loopmax) {
+			wchar_t *delfile;
+			aswprintf(&delfile, L"%s.%d", fv->FullName, loopmax);
+			DeleteFileW(delfile);
+			free(delfile);
+			i = loopmax - 1;
+		}
+
+		// .i → .(i+1), ..., .1 → .2 へシフトして .1 を空ける。
+		for (k = i ; k >= 1 ; k--) {
+			wchar_t *oldfile;
+			wchar_t *newfile;
+			aswprintf(&oldfile, L"%s.%d", fv->FullName, k);
+			aswprintf(&newfile, L"%s.%d", fv->FullName, k + 1);
+			if (MoveFileW(oldfile, newfile) == 0) {
+				OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+			}
+			free(oldfile);
+			free(newfile);
+		}
+
+		// 現在のログを .1（最新アーカイブ）へリネームする。
+		{
+			wchar_t *oldfile = _wcsdup(fv->FullName);
+			wchar_t *newfile;
+			aswprintf(&newfile, L"%s.1", fv->FullName);
+			if (MoveFileW(oldfile, newfile) == 0) {
+				OutputDebugPrintf("%s: rename %d\n", __FUNCTION__, errno);
+			}
+			free(oldfile);
+			free(newfile);
+		}
 	}
 
 	// 再オープン
@@ -724,6 +791,19 @@ void FLogRotateRotate(int step)
 		return;
 	}
 	fv->RotateStep = step;
+}
+
+/**
+ *	ログローテートの設定
+ *	ローテート方向を設定する (0: Unix方式/.1が最新, 1: 昇順/.1が最古)
+ */
+void FLogRotateAscending(int ascending)
+{
+	PFileVar fv = LogVar;
+	if (fv == NULL) {
+		return;
+	}
+	fv->RotateAscending = (ascending != 0);
 }
 
 /**
