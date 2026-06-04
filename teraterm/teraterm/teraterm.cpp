@@ -2,8 +2,6 @@
  * Copyright (C) 1994-1998 T. Teranishi
  * (C) 2006- TeraTerm Project
  * All rights reserved.
-
-#error "test: intentional compile error for issue-1092 verification"
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,6 +28,8 @@
  */
 
 /* TERATERM.EXE, main */
+
+#error "test: intentional compile error for issue-1092 verification"
 
 #include <stdio.h>
 #include <crtdbg.h>
