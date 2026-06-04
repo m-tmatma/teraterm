@@ -1,3 +1,4 @@
+exit /b 1
 CALL buildoniguruma6.bat
 if ERRORLEVEL 1 (
     echo "buildall.bat ‚ğI—¹‚µ‚Ü‚·"

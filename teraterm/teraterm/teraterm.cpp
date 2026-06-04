@@ -29,8 +29,6 @@
 
 /* TERATERM.EXE, main */
 
-#error "test: intentional compile error for issue-1092 verification"
-
 #include <stdio.h>
 #include <crtdbg.h>
 #include <windows.h>
