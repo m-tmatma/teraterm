@@ -12,7 +12,6 @@ rem
 rem ê¨â ï®ÇÕÇ±Ç±Ç…Ç‹Ç∆ÇﬂÇÈ
 rem  - Output/build/teraterm_common
 setlocal
-exit /b 1
 
 
 rem TARGET for package
