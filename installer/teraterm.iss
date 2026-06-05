@@ -1,4 +1,5 @@
 ﻿
+#error "test: intentional failure"
 #define AppName "Tera Term"
 
 ; Arch "x86" or "x64" or "arm64"
