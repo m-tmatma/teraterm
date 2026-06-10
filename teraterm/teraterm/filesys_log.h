@@ -53,6 +53,7 @@ wchar_t *FLogGetLogFilenameBase(const wchar_t *filename);
 void FLogPause(BOOL Pause);
 void FLogRotateSize(size_t size);
 void FLogRotateRotate(int step);
+void FLogRotateAscending(int ascending);
 void FLogRotateHalt(void);
 void FLogClose(void);
 BOOL FLogOpen(const wchar_t *fname, LogCode_t code, BOOL bom);

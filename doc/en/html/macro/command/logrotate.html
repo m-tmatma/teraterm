@@ -37,7 +37,12 @@ logrotate 'halt'
 	    The &lt;count&gt; value must be larger than 1.</dd>
 
 	<dt class="macro">'halt'</dt>
+
 	<dd>The log rotation is stopped.</dd>
+
+	<dt class="macro">'ascending' &lt;on_off&gt;</dt>
+	<dd>logrotate in unix manner, or ascending order.
+	on is .1 is the oldest. off is .1 is the newest.</dd>
 </dl>
 
 
@@ -60,6 +65,7 @@ logopen 'teraterm_sample.log' 0 0
 ; Start log rotation
 logrotate 'size' '32K'
 logrotate 'rotate' 3
+logrotate 'ascending'on
 
 pause 600
 ; Stop log rotation
