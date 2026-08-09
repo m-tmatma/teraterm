@@ -3206,6 +3206,18 @@ static WORD TTLLogRotate(void)
 				_snprintf_s(buf, sizeof(buf), _TRUNCATE, "%s %u", Str, num);
 		}
 
+	} else if (strcmp(Str, "ascending") == 0) {
+		if (CheckParameterGiven()) {
+			Err = 0;
+			GetStrVal(Str2, &Err);
+			if (Err == 0) {
+				if (strcmp(Str2, "on") == 0 || strcmp(Str2, "off") == 0)
+					_snprintf_s(buf, sizeof(buf), _TRUNCATE, "%s %s", Str, Str2);
+				else
+					Err = ErrSyntax;
+			}
+		}
+
 	} else if (strcmp(Str, "halt") == 0) {
 		Err = 0;
 		_snprintf_s(buf, sizeof(buf), _TRUNCATE, "%s", Str);

@@ -38,6 +38,10 @@ logrotate 'halt'
 
 	<dt class="macro">'halt'</dt>
 	<dd>ローテーションを停止する。</dd>
+
+	<dt class="macro">'ascending' &lt;on_off&gt;</dt>
+	<dd>ログローテートを unix形式にするか、昇順にする。
+	on は .1 が最古。off は .1 が最新</dd>
 </dl>
 
 
@@ -64,6 +68,7 @@ logrotate 'rotate' 3
 pause 600
 ; Stop log rotation
 logrotate 'halt'
+logrotate 'ascending'on
 
 pause 600
 

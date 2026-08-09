@@ -720,6 +720,9 @@ static HDDEDATA AcceptExecute(HSZ TopicHSz, HDDEDATA Data)
 			s = atoi(&p[7]);
 			FLogRotateRotate(s);
 
+		} else if (strncmp(p, "ascending", 9) == 0) {
+			FLogRotateAscending(strcmp(&p[10], "on") == 0 ? 1 : 0);
+
 		} else if (strncmp(p, "halt", 4) == 0) {
 			FLogRotateHalt();
 		}
